@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Home from './home'
 import App from './../App'
+import Modals from './modal'
 import Loading from './Loading'
 import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -9,12 +10,14 @@ const TabNavigator = createBottomTabNavigator({
 
     Home: { screen: Home },
     App: { screen: App },
+    Modals: { screen: Modals },
 })
 
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
     Home: { screen: TabNavigator },
+    Modals: { screen: TabNavigator },
 });
 
 const AppContainer = createAppContainer(AppNavigator);
