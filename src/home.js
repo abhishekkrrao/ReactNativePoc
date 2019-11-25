@@ -26,7 +26,7 @@ const SecondScreen = () => {
 };
 
 SecondScreen.navigationOptions = {
-  title: "Second Screen Title"
+  title: "Home"
 };
 
 export default SecondScreen;
