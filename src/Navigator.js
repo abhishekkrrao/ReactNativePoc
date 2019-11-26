@@ -19,6 +19,9 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
                 left: null,
             },
+            backButton: {
+                visible: false,
+            }
         }
     },
     App:
@@ -32,6 +35,9 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
                 left: null,
             },
+            backButton: {
+                visible: false,
+            }
         }
     },
     Modals:
@@ -45,6 +51,9 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
                 left: null,
             },
+            backButton: {
+                visible: false,
+            }
         }
     },
 },
@@ -52,19 +61,40 @@ const TabNavigator = createBottomTabNavigator({
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
-                if (routeName === 'Home') {
-                    return (
-                        <Image
-                            source={require('./assets/home.png')}
-                            style={{ width: 20, height: 20 }} />
-                    );
-                } else {
-                    return (
-                        <Image
-                            source={require('./assets/settings.png')}
-                            style={{ width: 20, height: 20 }} />
-                    );
+                switch (routeName) {
+                    case 'Home':
+                        return (
+                            <Image
+                                source={require('./assets/home.png')}
+                                style={{ width: 20, height: 20 }} />
+                        );
+                    case 'Modals':
+                        return (
+                            <Image
+                                source={require('./assets/settings.png')}
+                                style={{ width: 20, height: 20 }} />
+                        );
+                    case 'App':
+                        return (
+                            <Image
+                                source={require('./assets/contacts.png')}
+                                style={{ width: 20, height: 20 }} />
+                        );
                 }
+                // if (routeName === 'Home') {
+                //     return (
+                //         <Image
+                //             source={require('./assets/home.png')}
+                //             style={{ width: 20, height: 20 }} />
+                //     );
+                // } else {
+                //     return (
+                //         <Image
+                //             source={require('./assets/settings.png')}
+                //             style={{ width: 20, height: 20 }} />
+                //     );
+                // }
+
             },
         }),
         tabBarOptions: {
@@ -78,7 +108,13 @@ const AppNavigator = createStackNavigator({
     App: { screen: App },
     Home: { screen: TabNavigator },
     Modals: { screen: TabNavigator },
-});
+},
+    {
+        headerMode: 'none',
+        defaultNavigationOptions: {
+            gesturesEnabled: false,
+        }
+    });
 
 const AppContainer = createAppContainer(AppNavigator);
 export default class Navigator extends Component {
@@ -99,7 +135,9 @@ export default class Navigator extends Component {
             }
             const resetAction = StackActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({ routeName: initialRouteName })],
+                actions: [NavigationActions.navigate({
+                    routeName: initialRouteName
+                })],
             })
             this.navigation.dispatch(resetAction)
 

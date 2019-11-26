@@ -3,11 +3,11 @@ import { StyleSheet, Modal, Text, TouchableHighlight, View, Alert, FlatList, Ima
 import { Icon } from 'react-native-elements'
 import Loading from './Loading'
 export default class Modals extends Component {
-  
+
   state = {
     modalVisible: false,
     isLoading: true
-  
+
   };
   componentDidMount() {
     this.fetchMovies()
@@ -20,56 +20,67 @@ export default class Modals extends Component {
   render() {
     return (
       <View style={{ marginTop: 25 }}>
-
         <Modal
           animationType="slide"
           transparent={false}
           visible={this.state.modalVisible}
           onRequestClose={() => {
-            Alert.alert('Modal has been closed.');
+            // Alert.alert('Modal has been closed.');
+            this.setModalVisible(false);
           }}>
 
-        {this.state.isLoading ? <Loading /> : 
+          {this.state.isLoading ? <Loading /> :
 
-          <View style={{ marginTop: 55 }}>
-            <View>
-              <TouchableHighlight
-                onPress={() => {
-                  this.setModalVisible(!this.state.modalVisible);
-                }}>
-                <Icon
-                  raised
-                  name='close'
-                  color='#000000'
-                  onPress={() => this.setModalVisible(!this.state.modalVisible)} />
-              </TouchableHighlight>
-
-              <View style={{ marginTop: 15 }}>
-                <FlatList
-                  data={this.state.dataSource}
-                  ItemSeparatorComponent={this.FlatListItemSeparator}
-                  renderItem={({ item, index }) => {
-                    return (
-                      <View style={{ flex: 1, flexDirection: 'row' }}>
-                        <Image source={{ uri: item.sources }} style={styles.imageView} />
-                        <Text style={styles.textView} >{item.title}</Text>
-                      </View>
-                    )
-                  }
-                  }
-                  keyExtractor={(item, index) => index.toString()}
-                />
+            <View style={{ marginTop: 55 }}>
+              <View>
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}>
+                  <Icon
+                    raised
+                    name='close'
+                    color='#000000'
+                    onPress={() => this.setModalVisible(!this.state.modalVisible)} />
+                </TouchableHighlight>
+                <View style={{ marginTop: 15 }}>
+                  <FlatList
+                    data={this.state.dataSource}
+                    ItemSeparatorComponent={this.FlatListItemSeparator}
+                    renderItem={({ item, index }) => {
+                      return (
+                        <View style={{ flex: 1, flexDirection: 'row' }}>
+                          <Image source={{ uri: item.sources }} style={styles.imageView} />
+                          <Text style={styles.textView} >{item.title}</Text>
+                        </View>
+                      )
+                    }
+                    }
+                    keyExtractor={(item, index) => index.toString()}
+                  />
+                </View>
               </View>
-            </View>
-          </View>}
+            </View>}
         </Modal>
-
-        <TouchableHighlight
-          onPress={() => {
-            this.setModalVisible(true);
-          }}>
-          <Text>Show Modal</Text>
-        </TouchableHighlight>
+        <FlatList
+          data={this.state.dataSource}
+          ItemSeparatorComponent={this.FlatListItemSeparator}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setModalVisible(true);
+                  }} style={{ width:"50%" }}>
+                  <Image source={{ uri: item.sources }} style={styles.imageViewnew} />
+                </TouchableHighlight>
+                <Text style={styles.textView} >{item.title}</Text>
+              </View>
+            )
+          }
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
       </View>
     );
   }
@@ -195,6 +206,13 @@ const styles = StyleSheet.create({
   },
   imageView: {
     width: '50%',
+    height: 100,
+    margin: 7,
+    borderRadius: 7
+
+  },
+  imageViewnew: {
+    width: '100%',
     height: 100,
     margin: 7,
     borderRadius: 7
