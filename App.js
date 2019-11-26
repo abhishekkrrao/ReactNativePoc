@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight } from "react-native";
+import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput } from "react-native";
 
 
 export default class App extends Component {
@@ -137,29 +137,60 @@ export default class App extends Component {
     );
   }
 
-  render() {
-    const br = `\n`;
+
+
+  login() {
+
     return (
       <View style={styles.MainContainer}>
-        <FlatList
-          data={this.state.dataSource}
-          ItemSeparatorComponent={this.FlatListItemSeparator}
-          renderItem={({ item, index }) => {
-            return (
-              <View style={{ flex: 1 }}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
-                  <Image source={{ uri: item.sources }} style={styles.imageViews} />
-                </TouchableHighlight>
-                <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
-
-              </View>
-            )
-          }
-          }
-          keyExtractor={(item, index) => index.toString()}
-        />
+        <View style={{ padding: 5, width: "85%", left: "7%" }}>
+          <TextInput
+            style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 5 }}
+            placeholder='Email Id*'
+          />
+        </View>
+        <View style={{ padding: 5, width: "85%", left: "7%" }}>
+          <TextInput
+            style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 5 }}
+            placeholder='Password'
+          />
+        </View>
+        <View style={{ padding: 5, width: "85%", left: "7%" }}>
+          <Button
+            style={{ height: 35, backgroundColor: '#ccc'}}
+          title="Press me"
+            onPress={() => Alert.alert('Simple Button pressed')}
+          />
+        </View>
       </View>
+
     );
+  }
+
+  render() {
+    const br = `\n`;
+    return this.login();
+    // return (
+    //   <View style={styles.MainContainer}>
+    //     <FlatList
+    //       data={this.state.dataSource}
+    //       ItemSeparatorComponent={this.FlatListItemSeparator}
+    //       renderItem={({ item, index }) => {
+    //         return (
+    //           <View style={{ flex: 1 }}>
+    //             <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
+    //               <Image source={{ uri: item.sources }} style={styles.imageViews} />
+    //             </TouchableHighlight>
+    //             <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
+
+    //           </View>
+    //         )
+    //       }
+    //       }
+    //       keyExtractor={(item, index) => index.toString()}
+    //     />
+    //   </View>
+    // );
   }
 }
 
@@ -168,7 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     flex: 1,
     margin: 5,
-    marginTop: (Platform.OS === 'ios') ? 20 : 0,
+    marginTop: (Platform.OS === 'ios') ? 25 : 25,
   },
   imageView: {
     width: 'auto',
