@@ -1,12 +1,19 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput } from "react-native";
-
+import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput, AsyncStorage } from "react-native";
 
 export default class App extends Component {
   constructor(props) {
     super(props)
-    this.state = { isLoading: true }
+    // this.state = { isLoading: true }
+
+    this.state = {
+      email: '',
+      emailError: '',
+      password: '',
+      passwordError: ''
+    }
   }
+ 
   componentDidMount() {
     var mediaJSON = {
       "categories": [{
@@ -137,7 +144,47 @@ export default class App extends Component {
     );
   }
 
+  getUserInput() {
+    this.props.navigation.navigate('Home')
+  }
 
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+  _storeData(email){
+    AsyncStorage.setItem('email', email);
+}
+
+_retrieveData() {
+  try {
+    const value =  AsyncStorage.getItem('email');
+    if (value !== null) {
+      // We have data!!
+      console.log(value);
+      alert(value);
+    }
+  } catch (error) {
+    // Error retrieving data
+  }
+}
+  isValid() {
+    const emailError = this.validateEmail(this.state.email)
+    const passwordError = this.state.password
+    this.setState({
+      emailError: emailError,
+      passwordError: passwordError
+    })
+
+    if (!emailError && !passwordError) {
+      alert('Details are not valid!')
+    } else {
+      this.props.navigation.navigate('Home')
+    //   this._storeData(this.state.email);
+    //  // alert(this.state.email);
+    //   this._retrieveData();
+    }
+  }
 
   login() {
 
@@ -145,21 +192,23 @@ export default class App extends Component {
       <View style={styles.MainContainer}>
         <View style={{ padding: 5, width: "85%", left: "7%" }}>
           <TextInput
+            onChangeText={value => this.setState({ email: value.trim() })}
             style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 5 }}
             placeholder='Email Id*'
           />
         </View>
         <View style={{ padding: 5, width: "85%", left: "7%" }}>
           <TextInput
+            onChangeText={value => this.setState({ password: value.trim() })}
             style={{ height: 40, borderColor: 'gray', borderWidth: 1, padding: 5 }}
             placeholder='Password'
           />
         </View>
-        <View style={{ padding: 5, width: "85%", left: "7%" }}>
+        <View style={{ backgroundColor: '#99004d', height: 45, padding: 5, width: "80%", left: "10%", color: 'white' }}>
           <Button
-            style={{ height: 35, backgroundColor: '#ccc'}}
-          title="Press me"
-            onPress={() => Alert.alert('Simple Button pressed')}
+            style={{ width: 170, height: 35, color: 'white' }}
+            title="Log In"
+            onPress={() => this.isValid()}
           />
         </View>
       </View>
