@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput, AsyncStorage } from "react-native";
-
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -12,9 +11,35 @@ export default class App extends Component {
       password: '',
       passwordError: ''
     }
+    
   }
- 
+//   initFirebaseApp(){
+//     const iosConfig = {
+//         clientId: 'x',
+//         appId: '1:1030315320618:ios:a5046d75075c029a19aa53',
+//         apiKey: 'AIzaSyCfthKhLV1RCYYXRmCp-5OYVPfUahWAOlg',
+//         databaseURL: 'https://pschedoproject.firebaseio.com/',
+//         storageBucket: 'gs://pschedoproject.appspot.com',
+//         messagingSenderId: '1030315320618',
+//         projectId: 'pschedoproject',
+//         persistence: true,
+//       };
+//       const androidConfig = {
+//         clientId: 'x',
+//         appId: 'x',
+//         apiKey: 'x',
+//         databaseURL: 'x',
+//         storageBucket: 'x',
+//         messagingSenderId: 'x',
+//         projectId: 'x',
+//         persistence: true,
+//       };
+//       const pschedoProject = firebase.initializeApp(
+//         Platform.OS === 'ios' ? iosConfig : androidConfig
+//       );
+// }
   componentDidMount() {
+  //  this.initFirebaseApp();
     var mediaJSON = {
       "categories": [{
         "name": "Movies",

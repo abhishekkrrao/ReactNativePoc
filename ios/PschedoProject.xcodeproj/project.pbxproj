@@ -90,6 +90,7 @@
 		554053AE6B504B2D986E4525 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		5A2823D6F9AD4770BC9614E0 /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		5FE9AA4A982A9F21B433CC78 /* libPods-PschedoProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PschedoProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6F02C77523912E4C0098BF7A /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6F080AEC2390FD7700FC591D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6F080AEE2390FE6700FC591D /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6F185986238F92950031CDC6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -247,6 +248,7 @@
 				6F185986238F92950031CDC6 /* GoogleService-Info.plist */,
 				6F080AEC2390FD7700FC591D /* GoogleService-Info.plist */,
 				6F080AEE2390FE6700FC591D /* GoogleService-Info.plist */,
+				6F02C77523912E4C0098BF7A /* GoogleService-Info.plist */,
 				13B07FAE1A68108700A75B9A /* PschedoProject */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* PschedoProjectTests */,

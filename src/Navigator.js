@@ -3,16 +3,34 @@ import Home from './home'
 import App from './../App'
 import Modals from './modal'
 import Loading from './Loading'
-import { Image } from "react-native";
+import signUp from './SignUp'
+import Login from './Login'
+import { Image, Alert } from "react-native";
 import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { from } from "rxjs";
+import firebase from 'react-native-firebase'
 const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
             title: "Home",
+            headerLeft: null,
+            gesturesEnabled: false,
+            header: {
+                visible: false,
+                left: null,
+            },
+            backButton: {
+                visible: false,
+            }
+        }
+    },
+    signUp: {
+        screen: signUp,
+        navigationOptions: {
+            title: "signUp",
             headerLeft: null,
             gesturesEnabled: false,
             header: {
@@ -106,6 +124,8 @@ const TabNavigator = createBottomTabNavigator({
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
+    signUp: { screen: signUp },
+    Login: { screen: Login },
     Home: { screen: TabNavigator },
     Modals: { screen: TabNavigator },
 },
@@ -118,6 +138,7 @@ const AppNavigator = createStackNavigator({
 
 const AppContainer = createAppContainer(AppNavigator);
 export default class Navigator extends Component {
+    state = { currentUser: '' }
     render() {
         return (
             <AppContainer ref={r => this.navigation = r._navigation} />
@@ -125,14 +146,16 @@ export default class Navigator extends Component {
     }
 
     componentDidMount() {
+
         setTimeout(() => {
             let initialRouteName = 'Loading'
             let isLoggedIn = false
             if (isLoggedIn) {
                 initialRouteName = 'Home'
             } else {
-                initialRouteName = 'App'
+                initialRouteName = 'signUp'
             }
+           
             const resetAction = StackActions.reset({
                 index: 0,
                 actions: [NavigationActions.navigate({
