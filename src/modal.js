@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Modal, Text, TouchableHighlight, View, Alert, FlatList, Image } from 'react-native';
 import { Icon } from 'react-native-elements'
 import Loading from './Loading'
+import firebase from 'react-native-firebase'
 export default class Modals extends Component {
 
   state = {
@@ -16,7 +17,9 @@ export default class Modals extends Component {
   setModalVisible(visible) {
     this.setState({ modalVisible: visible });
   }
-
+  closeApp(){
+    firebase.auth().signOut();
+  }
   render() {
     return (
       <View style={{ marginTop: 25 }}>
@@ -42,6 +45,17 @@ export default class Modals extends Component {
                     name='close'
                     color='#000000'
                     onPress={() => this.setModalVisible(!this.state.modalVisible)} />
+                </TouchableHighlight>
+
+                <TouchableHighlight
+                  onPress={() => {
+                    this.setModalVisible(!this.state.modalVisible);
+                  }}>
+                  <Icon
+                    raised
+                    name='close'
+                    color='#000000'
+                    onPress={() => this.closeApp()} />
                 </TouchableHighlight>
                 <View style={{ marginTop: 15 }}>
                   <FlatList

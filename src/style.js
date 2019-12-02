@@ -6,7 +6,7 @@ export default {
     alignItems: 'center'
   },
   textInput: {
-    height: 40,
+    height: 60,
     fontSize:20,
     width: '90%',
     borderColor: '#9b9b9b',

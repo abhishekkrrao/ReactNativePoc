@@ -4,13 +4,14 @@ import App from './../App'
 import Modals from './modal'
 import Loading from './Loading'
 import signUp from './SignUp'
+import profile from './profile'
 import Login from './Login'
-import { Image, Alert } from "react-native";
+import { Image, Platform } from "react-native";
 import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
-import { from } from "rxjs";
 import firebase from 'react-native-firebase'
+
 const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home,
@@ -28,9 +29,9 @@ const TabNavigator = createBottomTabNavigator({
         }
     },
     signUp: {
-        screen: signUp,
+        screen: profile,
         navigationOptions: {
-            title: "signUp",
+            title: "profile",
             headerLeft: null,
             gesturesEnabled: false,
             header: {
@@ -144,26 +145,73 @@ export default class Navigator extends Component {
             <AppContainer ref={r => this.navigation = r._navigation} />
         )
     }
+    initFirebaseApp() {
+        const iosConfig = {
+            apiKey: 'AIzaSyCfthKhLV1RCYYXRmCp-5OYVPfUahWAOlg',
+            clientId: '1030315320618-upbact3r9qu7iccvqd1pl74rnp95ks64.apps.googleusercontent.com',
+            appId: '1:1030315320618:ios:a5046d75075c029a19aa53',
+            databaseURL: 'https://pschedoproject.firebaseio.com/',
+            storageBucket: 'gs://pschedoproject.appspot.com',
+            messagingSenderId: '1030315320618',
+            projectId: 'pschedoproject',
+            persistence: true,
+            authDomain: "pschedoproject.firebaseapp.com",
+        }
+        const androidConfig = {
+            apiKey: "AIzaSyCfthKhLV1RCYYXRmCp-5OYVPfUahWAOlg",
+            authDomain: "pschedoproject.firebaseapp.com",
+            databaseURL: "https://pschedoproject.firebaseio.com",
+            projectId: "pschedoproject",
+            storageBucket: "pschedoproject.appspot.com",
+            messagingSenderId: "1030315320618",
+            appId: "1:1030315320618:web:9a0f537b4125a0f819aa53",
+            measurementId: "G-ESXJTMWFNX"
+        }
+
+        firebase.initializeApp(
+            Platform.OS === 'ios' ? iosConfig : androidConfig
+        );
+    }
+
+
 
     componentDidMount() {
+        this.initFirebaseApp();
+        let initialRouteName = 'Loading';
+        // let initialRouteName = 'Loading'
+        let isLoggedIn = false
 
         setTimeout(() => {
-            let initialRouteName = 'Loading'
-            let isLoggedIn = false
-            if (isLoggedIn) {
-                initialRouteName = 'Home'
-            } else {
-                initialRouteName = 'signUp'
-            }
-           
-            const resetAction = StackActions.reset({
-                index: 0,
-                actions: [NavigationActions.navigate({
-                    routeName: initialRouteName
-                })],
+            firebase.auth().onAuthStateChanged(user => {
+                if (user == null) {
+                    initialRouteName = 'signUp'
+                    const resetAction = StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({
+                            routeName: initialRouteName
+                        })],
+                    })
+                    this.navigation.dispatch(resetAction)
+                } else {
+                    initialRouteName = 'Home'
+                    const resetAction = StackActions.reset({
+                        index: 0,
+                        actions: [NavigationActions.navigate({
+                            routeName: initialRouteName
+                        })],
+                    })
+                    this.navigation.dispatch(resetAction)
+                }
             })
-            this.navigation.dispatch(resetAction)
 
         }, 3000)
+
+        // if (isLoggedIn) {
+        //     initialRouteName = 'Home'
+        // } else {
+        //     initialRouteName = 'signUp'
+        // }
+
+
     }
 } 

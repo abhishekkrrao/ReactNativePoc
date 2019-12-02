@@ -7,16 +7,27 @@ export default class Login extends React.Component {
   handleLogin = () => {
     // TODO: Firebase stuff...
     const { email, password } = this.state
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(() => this.props.navigation.navigate('Home'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+    const emailError = this.validateEmail(this.state.email)
+    const passwordError = this.state.password
+    if (!emailError && !passwordError) {
+      alert('Details are not valid!')
+    } else {
+      firebase
+        .auth()
+        .signInWithEmailAndPassword(email, password)
+        .then(() => this.props.navigation.navigate('Home'))
+        .catch(error => this.setState({ errorMessage: error.message }))
+    }
   }
+  validateEmail = (email) => {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{color:'#e93766', fontSize: 40}}>Login</Text>
+        <Text style={{ color: '#e93766', fontSize: 40 }}>Login</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
@@ -38,7 +49,7 @@ export default class Login extends React.Component {
         />
         <Button title="Login" color="#e93766" onPress={this.handleLogin} />
         <View>
-        <Text> Don't have an account? <Text onPress={() => this.props.navigation.navigate('signUp')} style={{color:'#e93766', fontSize: 18}}> Sign Up </Text></Text>
+          <Text> Don't have an account? <Text onPress={() => this.props.navigation.navigate('signUp')} style={{ color: '#e93766', fontSize: 18 }}> Sign Up </Text></Text>
         </View>
       </View>
     )

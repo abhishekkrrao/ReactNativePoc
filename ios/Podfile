@@ -45,6 +45,8 @@ target 'PschedoProject' do
   pod 'Firebase/Database'
   # pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+  
+  
   target 'PschedoProjectTests' do
     inherit! :search_paths
     # Pods for testing
