@@ -245,25 +245,25 @@ _retrieveData() {
     const br = `\n`;
     return this.login();
     // return (
-    //   <View style={styles.MainContainer}>
-    //     <FlatList
-    //       data={this.state.dataSource}
-    //       ItemSeparatorComponent={this.FlatListItemSeparator}
-    //       renderItem={({ item, index }) => {
-    //         return (
-    //           <View style={{ flex: 1 }}>
-    //             <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
-    //               <Image source={{ uri: item.sources }} style={styles.imageViews} />
-    //             </TouchableHighlight>
-    //             <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
+      // <View style={styles.MainContainer}>
+      //   <FlatList
+      //     data={this.state.dataSource}
+      //     ItemSeparatorComponent={this.FlatListItemSeparator}
+      //     renderItem={({ item, index }) => {
+      //       return (
+      //         <View style={{ flex: 1 }}>
+      //           <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
+      //             <Image source={{ uri: item.sources }} style={styles.imageViews} />
+      //           </TouchableHighlight>
+      //           <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
 
-    //           </View>
-    //         )
-    //       }
-    //       }
-    //       keyExtractor={(item, index) => index.toString()}
-    //     />
-    //   </View>
+      //         </View>
+      //       )
+      //     }
+      //     }
+      //     keyExtractor={(item, index) => index.toString()}
+      //   />
+      // </View>
     // );
   }
 }
