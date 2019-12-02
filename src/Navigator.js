@@ -28,7 +28,7 @@ const TabNavigator = createBottomTabNavigator({
             }
         }
     },
-    signUp: {
+    profile: {
         screen: profile,
         navigationOptions: {
             title: "profile",
@@ -99,6 +99,12 @@ const TabNavigator = createBottomTabNavigator({
                                 source={require('./assets/contacts.png')}
                                 style={{ width: 20, height: 20 }} />
                         );
+                        case 'profile':
+                            return (
+                                <Image
+                                    source={require('./assets/contacts.png')}
+                                    style={{ width: 20, height: 20 }} />
+                            );
                 }
                 // if (routeName === 'Home') {
                 //     return (
@@ -126,6 +132,7 @@ const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
     signUp: { screen: signUp },
+    profile: { screen: profile },
     Login: { screen: Login },
     Home: { screen: TabNavigator },
     Modals: { screen: TabNavigator },

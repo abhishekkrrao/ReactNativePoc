@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, Button, View, ActivityIndicator } from "react-native";
+import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput, AsyncStorage } from "react-native";
 import firebase from 'react-native-firebase'
 const styles = StyleSheet.create({
     container: {
@@ -11,26 +11,24 @@ const styles = StyleSheet.create({
 
 });
 export default class profile extends Component {
-    state = { email: '' }
+
+    state = {
+        email: 'abhishek@gmail.com',
+    }
     componentDidMount() {
         this.readUserData();
     }
     readUserData() {
         firebase.database().ref('Users/').once('value', function (snapshot) {
-            console.log(snapshot.val())
-            this.setState({
-                dataSource: snapshot.val(),
-            }, function () {
-            });
+            console.log(snapshot.val().email)
+            
         });
     }
     render() {
         return (
             <View style={styles.container}>
-                <Text>
-
-                </Text>
+                <Text style={{ flex: 1 }} >{this.state.email}</Text>
             </View>
-        );
+        )
     }
 }
