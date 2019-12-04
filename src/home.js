@@ -41,14 +41,19 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center',
     padding: 10,
     color: '#000',
-    flex: 1
+    flex: 1,
+    fontFamily: "Montserrat-Medium",
+    fontWeight:'900',
+    fontSize:14
   },
   textViews: {
     width: '50%',
     textAlignVertical: 'center',
     padding: 10,
     color: '#000',
-    fontSize: 12
+    fontSize: 9,
+    fontFamily: "Montserrat-Medium",
+    fontWeight:'500'
   }
 });
 

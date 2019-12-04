@@ -31,7 +31,7 @@ const TabNavigator = createBottomTabNavigator({
     profile: {
         screen: profile,
         navigationOptions: {
-            title: "profile",
+            title: "User List",
             headerLeft: null,
             gesturesEnabled: false,
             header: {
@@ -63,7 +63,7 @@ const TabNavigator = createBottomTabNavigator({
     {
         screen: Modals,
         navigationOptions: {
-            title: "Contacts",
+            title: "Profile",
             headerLeft: null,
             gesturesEnabled: false,
             header: {

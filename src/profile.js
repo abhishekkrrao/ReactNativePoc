@@ -1,12 +1,15 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
-import { ListItem } from 'react-native-elements'
+import { ListItem ,Avatar } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F5FCFF",
-        padding: 25
+        paddingTop:25,
+        paddingLeft:5,
+        paddingEnd:5,
+        fontFamily: "Montserrat-Medium"
     }
 });
 export default class profile extends Component {
@@ -48,7 +51,7 @@ export default class profile extends Component {
                 hList.push({
                     email: snapshot.val().email,
                     name:'Test',
-                    avatar_url: 'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg'
+                    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar6.png'
                 });
                 resolve(hList);
             });
@@ -61,7 +64,7 @@ export default class profile extends Component {
                 roundAvatar
                 title={item.name}
                 subtitle={item.email}
-                avatar={{ uri: item.avatar_url }}
+                leftAvatar={{ source: { uri: item.avatar_url } }}
             />
         )
     }

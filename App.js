@@ -11,35 +11,35 @@ export default class App extends Component {
       password: '',
       passwordError: ''
     }
-    
+
   }
-//   initFirebaseApp(){
-//     const iosConfig = {
-//         clientId: 'x',
-//         appId: '1:1030315320618:ios:a5046d75075c029a19aa53',
-//         apiKey: 'AIzaSyCfthKhLV1RCYYXRmCp-5OYVPfUahWAOlg',
-//         databaseURL: 'https://pschedoproject.firebaseio.com/',
-//         storageBucket: 'gs://pschedoproject.appspot.com',
-//         messagingSenderId: '1030315320618',
-//         projectId: 'pschedoproject',
-//         persistence: true,
-//       };
-//       const androidConfig = {
-//         clientId: 'x',
-//         appId: 'x',
-//         apiKey: 'x',
-//         databaseURL: 'x',
-//         storageBucket: 'x',
-//         messagingSenderId: 'x',
-//         projectId: 'x',
-//         persistence: true,
-//       };
-//       const pschedoProject = firebase.initializeApp(
-//         Platform.OS === 'ios' ? iosConfig : androidConfig
-//       );
-// }
+  //   initFirebaseApp(){
+  //     const iosConfig = {
+  //         clientId: 'x',
+  //         appId: '1:1030315320618:ios:a5046d75075c029a19aa53',
+  //         apiKey: 'AIzaSyCfthKhLV1RCYYXRmCp-5OYVPfUahWAOlg',
+  //         databaseURL: 'https://pschedoproject.firebaseio.com/',
+  //         storageBucket: 'gs://pschedoproject.appspot.com',
+  //         messagingSenderId: '1030315320618',
+  //         projectId: 'pschedoproject',
+  //         persistence: true,
+  //       };
+  //       const androidConfig = {
+  //         clientId: 'x',
+  //         appId: 'x',
+  //         apiKey: 'x',
+  //         databaseURL: 'x',
+  //         storageBucket: 'x',
+  //         messagingSenderId: 'x',
+  //         projectId: 'x',
+  //         persistence: true,
+  //       };
+  //       const pschedoProject = firebase.initializeApp(
+  //         Platform.OS === 'ios' ? iosConfig : androidConfig
+  //       );
+  // }
   componentDidMount() {
-  //  this.initFirebaseApp();
+    //  this.initFirebaseApp();
     var mediaJSON = {
       "categories": [{
         "name": "Movies",
@@ -177,22 +177,22 @@ export default class App extends Component {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
-  _storeData(email){
+  _storeData(email) {
     AsyncStorage.setItem('email', email);
-}
-
-_retrieveData() {
-  try {
-    const value =  AsyncStorage.getItem('email');
-    if (value !== null) {
-      // We have data!!
-      console.log(value);
-      alert(value);
-    }
-  } catch (error) {
-    // Error retrieving data
   }
-}
+
+  _retrieveData() {
+    try {
+      const value = AsyncStorage.getItem('email');
+      if (value !== null) {
+        // We have data!!
+        console.log(value);
+        alert(value);
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  }
   isValid() {
     const emailError = this.validateEmail(this.state.email)
     const passwordError = this.state.password
@@ -205,9 +205,9 @@ _retrieveData() {
       alert('Details are not valid!')
     } else {
       this.props.navigation.navigate('Home')
-    //   this._storeData(this.state.email);
-    //  // alert(this.state.email);
-    //   this._retrieveData();
+      //   this._storeData(this.state.email);
+      //  // alert(this.state.email);
+      //   this._retrieveData();
     }
   }
 
@@ -243,28 +243,27 @@ _retrieveData() {
 
   render() {
     const br = `\n`;
-    return this.login();
-    // return (
-      // <View style={styles.MainContainer}>
-      //   <FlatList
-      //     data={this.state.dataSource}
-      //     ItemSeparatorComponent={this.FlatListItemSeparator}
-      //     renderItem={({ item, index }) => {
-      //       return (
-      //         <View style={{ flex: 1 }}>
-      //           <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
-      //             <Image source={{ uri: item.sources }} style={styles.imageViews} />
-      //           </TouchableHighlight>
-      //           <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
+    return (
+      <View style={styles.MainContainer}>
+        <FlatList
+          data={this.state.dataSource}
+          ItemSeparatorComponent={this.FlatListItemSeparator}
+          renderItem={({ item, index }) => {
+            return (
+              <View style={{ flex: 1 }}>
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
+                  <Image source={{ uri: item.sources }} style={styles.imageViews} />
+                </TouchableHighlight>
+                <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
 
-      //         </View>
-      //       )
-      //     }
-      //     }
-      //     keyExtractor={(item, index) => index.toString()}
-      //   />
-      // </View>
-    // );
+              </View>
+            )
+          }
+          }
+          keyExtractor={(item, index) => index.toString()}
+        />
+      </View>
+    );
   }
 }
 
