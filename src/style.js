@@ -22,7 +22,7 @@ export default {
     width:150,
     backgroundColor:'#ffffff',
     height:45,
-    color:'#e93766',
+    color:'#000',
     borderRadius:10,
     justifyContent: 'center',
     alignItems: 'center',

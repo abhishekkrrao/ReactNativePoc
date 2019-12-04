@@ -61,10 +61,13 @@ export default class profile extends Component {
     renderRow({ item }) {
         return (
             <ListItem
+                style= {{fontFamily:'Montserrat-Medium'}}
                 roundAvatar
                 title={item.name}
                 subtitle={item.email}
                 leftAvatar={{ source: { uri: item.avatar_url } }}
+                bottomDivider
+                chevron
             />
         )
     }
