@@ -47,6 +47,8 @@ target 'PschedoProject' do
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   
   
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'PschedoProjectTests' do
     inherit! :search_paths
     # Pods for testing

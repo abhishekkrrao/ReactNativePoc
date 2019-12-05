@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Home from './home'
 import App from './../App'
+import Details from './details/details'
 import Modals from './modal'
 import Loading from './Loading'
 import signUp from './SignUp'
@@ -131,6 +132,7 @@ const TabNavigator = createBottomTabNavigator({
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
+    Details: { screen: Details },
     signUp: { screen: signUp },
     profile: { screen: profile },
     Login: { screen: Login },

@@ -2,7 +2,8 @@
 // import { StyleSheet, Text, View } from "react-native";
 import React, { Component } from "react";
 import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight } from "react-native";
-
+import { Header } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 
 // const styles = StyleSheet.create({
 //   container: {
@@ -21,8 +22,7 @@ const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: 'center',
     flex: 1,
-    margin: 5,
-    marginTop: (Platform.OS === 'ios') ? 30 : 30,
+    margin: 0
   },
   imageView: {
     width: 'auto',
@@ -43,8 +43,8 @@ const styles = StyleSheet.create({
     color: '#000',
     flex: 1,
     fontFamily: "Montserrat-Medium",
-    fontWeight:'900',
-    fontSize:14
+    fontWeight: '900',
+    fontSize: 14
   },
   textViews: {
     width: '50%',
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     color: '#000',
     fontSize: 9,
     fontFamily: "Montserrat-Medium",
-    fontWeight:'500'
+    fontWeight: '500'
   }
 });
 
@@ -175,17 +175,32 @@ export default class Home extends Component {
       });
 
   }
+
+  closeApp(){
+    console.log('close App');
+    this.props.navigation.goBack();
+  }
+
   render() {
     const br = `\n`;
     return (
       <View style={styles.MainContainer}>
+        <Header
+      ViewComponent={LinearGradient} // Don't forget this!
+      centerComponent={{ text: 'Home', style: { color: '#fff',fontFamily: "Montserrat-Medium" } }}
+      linearGradientProps={{
+        colors: ['#E64A19', '#D84315'],
+        start: { x: 0, y: 0.5 },
+        end: { x: 1, y: 0.5 },
+      }}
+    />
         <FlatList
           data={this.state.dataSource}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({ item, index }) => {
             return (
               <View style={{ flex: 1 }}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Home')} style={styles.imageView} >
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Details',{item:item})} style={styles.imageView} >
                   <Image source={{ uri: item.sources }} style={styles.imageViews} />
                 </TouchableHighlight>
                 <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>

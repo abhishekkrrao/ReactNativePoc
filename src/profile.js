@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, FlatList } from "react-native";
-import { ListItem ,Avatar } from 'react-native-elements'
+import { ListItem, Avatar } from 'react-native-elements'
 import firebase from 'react-native-firebase'
+import { Header } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: "#F5FCFF",
-        paddingTop:25,
-        paddingLeft:5,
-        paddingEnd:5,
         fontFamily: "Montserrat-Medium"
     }
 });
@@ -50,7 +49,7 @@ export default class profile extends Component {
             ref.orderByChild('email').on('child_added', function (snapshot) {
                 hList.push({
                     email: snapshot.val().email,
-                    name:'Test',
+                    name: 'Test',
                     avatar_url: 'https://bootdey.com/img/Content/avatar/avatar6.png'
                 });
                 resolve(hList);
@@ -61,7 +60,7 @@ export default class profile extends Component {
     renderRow({ item }) {
         return (
             <ListItem
-                style= {{fontFamily:'Montserrat-Medium'}}
+                style={{ fontFamily: 'Montserrat-Medium' }}
                 roundAvatar
                 title={item.name}
                 subtitle={item.email}
@@ -74,11 +73,21 @@ export default class profile extends Component {
     render() {
         return (
             <View style={styles.container}>
-               <FlatList
-                        data={this.state.list}
-                        renderItem={this.renderRow}
-                        keyExtractor={item => item}
-                    />
+                <Header
+                    ViewComponent={LinearGradient} // Don't forget this!
+                    centerComponent={{ text: 'User List', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+                    // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
+                    linearGradientProps={{
+                        colors: ['#E64A19', '#D84315'],
+                        start: { x: 0, y: 0.5 },
+                        end: { x: 1, y: 0.5 },
+                    }}
+                />
+                <FlatList
+                    data={this.state.list}
+                    renderItem={this.renderRow}
+                    keyExtractor={item => item}
+                />
             </View>
 
             // <List containerStyle={{ marginBottom: 20 }}>

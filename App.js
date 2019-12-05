@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight, TextInput, AsyncStorage } from "react-native";
+import { Header } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 export default class App extends Component {
   constructor(props) {
     super(props)
@@ -245,6 +247,16 @@ export default class App extends Component {
     const br = `\n`;
     return (
       <View style={styles.MainContainer}>
+        <Header
+          ViewComponent={LinearGradient} // Don't forget this!
+          centerComponent={{ text: 'Setting', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
+          linearGradientProps={{
+            colors: ['#E64A19', '#D84315'],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+          }}
+        />
         <FlatList
           data={this.state.dataSource}
           ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -269,10 +281,7 @@ export default class App extends Component {
 
 const styles = StyleSheet.create({
   MainContainer: {
-    justifyContent: 'center',
     flex: 1,
-    margin: 5,
-    marginTop: (Platform.OS === 'ios') ? 25 : 25,
   },
   imageView: {
     width: 'auto',
