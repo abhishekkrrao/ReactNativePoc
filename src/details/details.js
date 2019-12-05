@@ -14,6 +14,7 @@ export default class Details extends Component {
     return (
       <View style={detailstyle.container}>
         <Header
+          containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
           centerComponent={{ text: 'Details', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
           leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
@@ -27,8 +28,8 @@ export default class Details extends Component {
           <TouchableHighlight style={{ maxHeight: 150, width: '100%', height: 150, margin: 0, borderRadius: 7, flex: 1, padding: 0 }} >
             <Image source={{ uri: receivedValue.sources }} style={{ maxHeight: 150, margin: 0, flex: 1, padding: 0 }} />
           </TouchableHighlight>
-          <Text style={{ fontFamily: "Montserrat-Medium",paddingTop:5 }}>{receivedValue.title}</Text>
-          <Text style={{ fontFamily: "Montserrat-Medium",paddingTop:5 }}>{receivedValue.description}</Text>
+          <Text style={{ fontFamily: "Montserrat-Medium", paddingTop: 5 }}>{receivedValue.title}</Text>
+          <Text style={{ fontFamily: "Montserrat-Medium", paddingTop: 5 }}>{receivedValue.description}</Text>
         </View>
       </View>
     );

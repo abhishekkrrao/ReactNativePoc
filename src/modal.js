@@ -270,6 +270,8 @@ import {
 } from 'react-native';
 import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
+import { Header } from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
 export default class Modals extends Component {
   state = {
     email: ''
@@ -284,7 +286,7 @@ export default class Modals extends Component {
       email: user.email
     });
   }
-    closeApp(){
+  closeApp() {
     firebase.auth().signOut();
   }
   render() {
@@ -292,6 +294,17 @@ export default class Modals extends Component {
     var name = data.substring(0, data.lastIndexOf("@"));
     return (
       <View style={styles.container}>
+        <Header
+          containerStyle={{ height: 75 }}
+          ViewComponent={LinearGradient} // Don't forget this!
+          centerComponent={{ text: 'Profile', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
+          linearGradientProps={{
+            colors: ['#E64A19', '#D84315'],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+          }}
+        />
         <View style={styles.header}>
           <View style={styles.headerContent}>
             <Image style={styles.avatar}
@@ -355,8 +368,7 @@ export default class Modals extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    paddingTop: 30,
-    justifyContent: 'center'
+    flex: 1
   },
   header: {
     backgroundColor: "#DCDCDC",

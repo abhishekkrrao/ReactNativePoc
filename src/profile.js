@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, Text, FlatList, Alert } from "react-native";
 import { ListItem, Avatar } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import { Header } from 'react-native-elements';
@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     }
 });
 export default class profile extends Component {
-
+  
     state = {}
     componentDidMount() {
 
@@ -49,14 +49,16 @@ export default class profile extends Component {
             ref.orderByChild('email').on('child_added', function (snapshot) {
                 hList.push({
                     email: snapshot.val().email,
-                    name: 'Test',
-                    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar6.png'
+                    name: snapshot.val().email.substring(0, snapshot.val().email.lastIndexOf("@")),
+                    avatar_url: 'https://bootdey.com/img/Content/avatar/avatar6.png',
+                    uid: snapshot.val().uid
                 });
                 resolve(hList);
             });
         });
 
     }
+
     renderRow({ item }) {
         return (
             <ListItem
@@ -67,13 +69,18 @@ export default class profile extends Component {
                 leftAvatar={{ source: { uri: item.avatar_url } }}
                 bottomDivider
                 chevron
-            />
+            >
+                <View>
+
+                </View>
+            </ListItem>
         )
     }
     render() {
         return (
             <View style={styles.container}>
                 <Header
+                    containerStyle={{ height: 75 }}
                     ViewComponent={LinearGradient} // Don't forget this!
                     centerComponent={{ text: 'User List', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
                     // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}

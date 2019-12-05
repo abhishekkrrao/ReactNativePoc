@@ -248,6 +248,7 @@ export default class App extends Component {
     return (
       <View style={styles.MainContainer}>
         <Header
+         containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
           centerComponent={{ text: 'Setting', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
           // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}

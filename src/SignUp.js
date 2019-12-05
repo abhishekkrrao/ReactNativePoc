@@ -26,12 +26,14 @@ export default class signUp extends Component {
     }
 
     writeUserData(email) {
-        firebase.database().ref('Users/').push({email}).then((data) => {
-            //success callback
-            console.log('data ', data)
-        }).catch((error) => {
-            //error callback
-            console.log('error ', error)
+        firebase.auth().onAuthStateChanged(user => {
+            firebase.database().ref('Users/').push({email:email,uid:user.uid}).then((data) => {
+                //success callback
+                console.log('data ', data)
+            }).catch((error) => {
+                //error callback
+                console.log('error ', error)
+            })
         })
     }
     componentDidMount() {

@@ -176,7 +176,7 @@ export default class Home extends Component {
 
   }
 
-  closeApp(){
+  closeApp() {
     console.log('close App');
     this.props.navigation.goBack();
   }
@@ -186,21 +186,22 @@ export default class Home extends Component {
     return (
       <View style={styles.MainContainer}>
         <Header
-      ViewComponent={LinearGradient} // Don't forget this!
-      centerComponent={{ text: 'Home', style: { color: '#fff',fontFamily: "Montserrat-Medium" } }}
-      linearGradientProps={{
-        colors: ['#E64A19', '#D84315'],
-        start: { x: 0, y: 0.5 },
-        end: { x: 1, y: 0.5 },
-      }}
-    />
+          containerStyle={{ height: 75 }}
+          ViewComponent={LinearGradient} // Don't forget this!
+          centerComponent={{ text: 'Home', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          linearGradientProps={{
+            colors: ['#E64A19', '#D84315'],
+            start: { x: 0, y: 0.5 },
+            end: { x: 1, y: 0.5 },
+          }}
+        />
         <FlatList
           data={this.state.dataSource}
           ItemSeparatorComponent={this.FlatListItemSeparator}
           renderItem={({ item, index }) => {
             return (
               <View style={{ flex: 1 }}>
-                <TouchableHighlight onPress={() => this.props.navigation.navigate('Details',{item:item})} style={styles.imageView} >
+                <TouchableHighlight onPress={() => this.props.navigation.navigate('Details', { item: item })} style={styles.imageView} >
                   <Image source={{ uri: item.sources }} style={styles.imageViews} />
                 </TouchableHighlight>
                 <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
