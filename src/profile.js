@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList, Alert } from "react-native";
-import { ListItem, Avatar } from 'react-native-elements'
+import { StyleSheet, View, FlatList, TouchableHighlight, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -11,23 +11,19 @@ const styles = StyleSheet.create({
         fontFamily: "Montserrat-Medium"
     }
 });
-export default class profile extends Component {
-  
-    state = {}
-    componentDidMount() {
 
-        this.readUserData();
+export default class profile extends Component {
+    state = {}
+    // navigation;
+    constructor(props) {
+        super(props)
+      //  navigation = this.props.navigation;
     }
-    FlatListItemSeparator = () => {
-        return (
-            <View
-                style={{
-                    height: .5,
-                    width: "100%",
-                    backgroundColor: "#000",
-                }}
-            />
-        );
+    static navigationOptions = {
+        title: 'User List'
+      };
+    componentDidMount() {
+        this.readUserData();
     }
     readUserData() {
         // var recentPostsRef = firebase.database().ref('/Users');
@@ -56,32 +52,50 @@ export default class profile extends Component {
                 resolve(hList);
             });
         });
-
     }
-
-    renderRow({ item }) {
+    renderRow(item ) {
+        console.log('item ',item);
         return (
-            <ListItem
-                style={{ fontFamily: 'Montserrat-Medium' }}
-                roundAvatar
-                title={item.name}
-                subtitle={item.email}
-                leftAvatar={{ source: { uri: item.avatar_url } }}
-                bottomDivider
-                chevron
-            >
-                <View>
-
+            <View style={{
+                flex: 1, flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
+                padding: 5,
+                backgroundColor: '#ccc',
+                marginTop: 5,
+                borderRadius: 5,
+                width: '95%',
+                marginLeft: '2.5%'
+            }}>
+                <View style={{ width: 70 }}>
+                    <TouchableHighlight style={{ padding: 5 }} >
+                        <Image source={{ uri: item.avatar_url }} style={{ width: 50, height: 50, borderRadius: 30 }} />
+                    </TouchableHighlight>
                 </View>
-            </ListItem>
+                <View style={{ flex: 1 }}>
+                    <Text style={{ fontFamily: "Montserrat-Medium" }}>
+                        {item.name}
+                    </Text>
+                    <Text style={{ fontFamily: "Montserrat-Medium" }}>
+                        {item.email}
+                    </Text>
+                </View>
+                <View style={{ width: 50, textAlign: 'right' }}>
+                    <Icon
+                        name='arrow-forward'
+                        color='#f50'
+                        onPress={() => this.props.navigation.navigate("Chats", { item: item })} />
+                </View>
+            </View>
         )
     }
     render() {
+        // console.log('this.props.navigation ',this.props.navigation)
         return (
             <View style={styles.container}>
                 <Header
                     containerStyle={{ height: 75 }}
-                    ViewComponent={LinearGradient} // Don't forget this!
+                    ViewComponent={LinearGradient}
                     centerComponent={{ text: 'User List', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
                     // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
                     linearGradientProps={{
@@ -92,37 +106,13 @@ export default class profile extends Component {
                 />
                 <FlatList
                     data={this.state.list}
-                    renderItem={this.renderRow}
-                    keyExtractor={item => item}
+                    renderItem={({item,i})=>{
+                        console.log(item['item'],'   iiii ',i);
+                        return this.renderRow(item)
+                    }}
+                    keyExtractor={({item,index}) => index+'llll'}
                 />
             </View>
-
-            // <List containerStyle={{ marginBottom: 20 }}>
-            //     {
-            //         this.state.list.map((l) => (
-            //             <ListItem
-            //                 roundAvatar
-            //                 avatar={{ uri: l.avatar_url }}
-            //                 title={l.email}
-            //             />
-            //         ))
-            //     }
-            // </List>
-            // <View style={styles.container}>
-            //     {
-            //         <FlatList
-            //             data={this.state.list}
-            //             ItemSeparatorComponent={this.FlatListItemSeparator}
-            //             renderItem={({ item, index }) => {
-            //                 return (
-            //                     <View style={styles.container}>
-            //                         <Text style={{ flex: 1 }} >{item.email}</Text>
-            //                     </View>
-            //                 )
-            //             }}
-            //             keyExtractor={(item, index) => index.toString()}
-            //         />}
-            // </View>
         )
     }
 }

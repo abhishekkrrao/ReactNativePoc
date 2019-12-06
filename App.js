@@ -273,7 +273,7 @@ export default class App extends Component {
             )
           }
           }
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => index+'fsdfgsdfg'}
         />
       </View>
     );

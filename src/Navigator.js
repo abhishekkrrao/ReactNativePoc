@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Home from './home'
 import App from './../App'
 import Details from './details/details'
+import Chats from './chat/chat'
 import Modals from './modal'
 import Loading from './Loading'
 import signUp from './SignUp'
@@ -13,9 +14,11 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import firebase from 'react-native-firebase'
 
+
 const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home,
+
         navigationOptions: {
             title: "Home",
             headerLeft: null,
@@ -31,7 +34,7 @@ const TabNavigator = createBottomTabNavigator({
     },
     profile: {
         screen: profile,
-        navigationOptions: {
+        navigationOptions: ({ navigation }) => ({
             title: "User List",
             headerLeft: null,
             gesturesEnabled: false,
@@ -42,7 +45,7 @@ const TabNavigator = createBottomTabNavigator({
             backButton: {
                 visible: false,
             }
-        }
+        })
     },
     App:
     {
@@ -81,6 +84,7 @@ const TabNavigator = createBottomTabNavigator({
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
+                console.log(routeName)
                 switch (routeName) {
                     case 'Home':
                         return (
@@ -107,20 +111,6 @@ const TabNavigator = createBottomTabNavigator({
                                 style={{ width: 20, height: 20 }} />
                         );
                 }
-                // if (routeName === 'Home') {
-                //     return (
-                //         <Image
-                //             source={require('./assets/home.png')}
-                //             style={{ width: 20, height: 20 }} />
-                //     );
-                // } else {
-                //     return (
-                //         <Image
-                //             source={require('./assets/settings.png')}
-                //             style={{ width: 20, height: 20 }} />
-                //     );
-                // }
-
             },
         }),
         tabBarOptions: {
@@ -128,17 +118,18 @@ const TabNavigator = createBottomTabNavigator({
             inactiveTintColor: '#263238',
         },
     })
-
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
     Details: { screen: Details },
+    Chats: { screen: Chats },
     signUp: { screen: signUp },
     profile: { screen: profile },
     Login: { screen: Login },
-    Home: { screen: TabNavigator },
-    Modals: { screen: TabNavigator },
-     },{
+    Home: { screen: Home },
+    Modals: { screen: Modals },
+    Tabs: { screen: TabNavigator },
+}, {
         headerMode: 'none',
         defaultNavigationOptions: {
             gesturesEnabled: false,
@@ -146,6 +137,7 @@ const AppNavigator = createStackNavigator({
     });
 
 const AppContainer = createAppContainer(AppNavigator);
+
 export default class Navigator extends Component {
     state = { currentUser: '' }
     render() {
@@ -186,40 +178,26 @@ export default class Navigator extends Component {
     componentDidMount() {
         this.initFirebaseApp();
         let initialRouteName = 'Loading';
-        // let initialRouteName = 'Loading'
-        let isLoggedIn = false
-
-        setTimeout(() => {
-            firebase.auth().onAuthStateChanged(user => {
-                if (user == null) {
-                    initialRouteName = 'signUp'
-                    const resetAction = StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({
-                            routeName: initialRouteName
-                        })],
-                    })
-                    this.navigation.dispatch(resetAction)
-                } else {
-                    initialRouteName = 'Home'
-                    const resetAction = StackActions.reset({
-                        index: 0,
-                        actions: [NavigationActions.navigate({
-                            routeName: initialRouteName
-                        })],
-                    })
-                    this.navigation.dispatch(resetAction)
-                }
-            })
-
-        }, 3000)
-
-        // if (isLoggedIn) {
-        //     initialRouteName = 'Home'
-        // } else {
-        //     initialRouteName = 'signUp'
-        // }
-
-
+        firebase.auth().onAuthStateChanged(user => {
+            if (user == null) {
+                initialRouteName = 'signUp'
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({
+                        routeName: initialRouteName
+                    })],
+                })
+                this.navigation.dispatch(resetAction);
+            } else {
+                initialRouteName = 'Tabs'
+                const resetAction = StackActions.reset({
+                    index: 0,
+                    actions: [NavigationActions.navigate({
+                        routeName: initialRouteName
+                    })],
+                });
+                this.navigation.dispatch(resetAction);
+            }
+        });
     }
 } 
