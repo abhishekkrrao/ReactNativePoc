@@ -54,8 +54,6 @@ export default class profile extends Component {
         });
     }
     renderRow(item ) {
-        console.log('item ',item);
-        console.log('itemUid ',item.uid);
         return (
             <View style={{
                 flex: 1, flexDirection: 'row',
@@ -108,7 +106,6 @@ export default class profile extends Component {
                 <FlatList
                     data={this.state.list}
                     renderItem={({item,i})=>{
-                        console.log(item['item'],'   iiii ',i);
                         return this.renderRow(item)
                     }}
                     keyExtractor={({item,index}) => index+'llll'}

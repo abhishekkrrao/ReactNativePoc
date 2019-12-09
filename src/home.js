@@ -1,23 +1,7 @@
-// import React, { Component } from "react";
-// import { StyleSheet, Text, View } from "react-native";
 import React, { Component } from "react";
 import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight } from "react-native";
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#F5FCFF"
-//   },
-//   welcome: {
-//     fontSize: 20,
-//     textAlign: "center",
-//     margin: 10
-//   }
-// });
 const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: 'center',
@@ -177,7 +161,7 @@ export default class Home extends Component {
   }
 
   closeApp() {
-    console.log('close App');
+    // console.log('close App');
     this.props.navigation.goBack();
   }
 
@@ -216,19 +200,3 @@ export default class Home extends Component {
     );
   }
 }
-
-// const SecondScreen = () => {
-//   return (
-//     <View style={styles.container}>
-//       <Text style={styles.welcome}>
-//         THIS IS THE SECOND SCREEN!
-//       </Text>
-//     </View>
-//   );
-// };
-
-// SecondScreen.navigationOptions = {
-//   title: "Home"
-// };
-
-// export default SecondScreen;

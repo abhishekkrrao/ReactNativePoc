@@ -188,7 +188,7 @@ export default class App extends Component {
       const value = AsyncStorage.getItem('email');
       if (value !== null) {
         // We have data!!
-        console.log(value);
+        // console.log(value);
         alert(value);
       }
     } catch (error) {

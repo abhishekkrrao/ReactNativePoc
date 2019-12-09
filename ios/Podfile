@@ -43,6 +43,7 @@ target 'PschedoProject' do
   pod 'Firebase/Auth'
   pod 'Firebase/Firestore'
   pod 'Firebase/Database'
+  pod 'Firebase/Storage'
   # pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
   
