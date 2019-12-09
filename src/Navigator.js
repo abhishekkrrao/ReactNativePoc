@@ -116,6 +116,7 @@ const TabNavigator = createBottomTabNavigator({
         tabBarOptions: {
             activeTintColor: '#FF6F00',
             inactiveTintColor: '#263238',
+            style: { height: 60 }
         },
     })
 const AppNavigator = createStackNavigator({

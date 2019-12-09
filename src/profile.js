@@ -55,6 +55,7 @@ export default class profile extends Component {
     }
     renderRow(item ) {
         console.log('item ',item);
+        console.log('itemUid ',item.uid);
         return (
             <View style={{
                 flex: 1, flexDirection: 'row',

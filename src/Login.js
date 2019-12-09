@@ -19,7 +19,6 @@ export default class Login extends React.Component {
         .catch(error => this.setState({ errorMessage: error.message }))
     }
   }
-
   static navigationOptions = ({ navigation }) => {
     return {
       header: (
