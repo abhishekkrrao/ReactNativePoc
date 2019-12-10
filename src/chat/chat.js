@@ -28,7 +28,7 @@ export default class Chats extends Component {
         })
         firebase.database().ref('chat/' + user.uid + this.state.recieverUid).push({ message: messages[0].text, senderUid: user.uid, createdAt: messages[0].createdAt, recieverUid: this.state.recieverUid }).then((data) => {
           //success callback
-          console.log('data ', data)
+         // console.log('data ', data)
         }).catch((error) => {
           //error callback
           console.log('error ', error)
@@ -69,21 +69,24 @@ export default class Chats extends Component {
       })
     })
   }
+  
   getList(currentUID, recieverUid) {
     // console.log('currentUID_recieverUid ', + currentUID + ' '+recieverUid);
     return new Promise((resolve, reject) => {
       const arrayList = [];
       const senderRef = firebase.database().ref('chat/' + this.state.currentUID + this.state.recieverUid);
       const recieverRef = firebase.database().ref('chat/' + this.state.recieverUid + this.state.currentUID);
-      console.log('path1>>> ', 'chat/' + this.state.recieverUid + this.state.currentUID)
+     // console.log('path1>>> ', 'chat/' + this.state.recieverUid + this.state.currentUID)
+    //  console.log('path12>>> ', 'chat/' + this.state.currentUID + this.state.recieverUid)
       senderRef.orderByChild('createdAt').on('child_added', function (snapshot) {
-        console.log('snapshot.val() ', snapshot.val().createdAt);
+        // console.log('snapshot.val() ', snapshot.val().createdAt);
         arrayList.push({
           createdAt: snapshot.val().createdAt,
           message: snapshot.val().message,
           recieverUid: snapshot.val().recieverUid,
           senderUid: snapshot.val().senderUid
         });
+        resolve(arrayList)
       });
       recieverRef.orderByChild('createdAt').on('child_added', function (snapshot) {
         // console.log('snapshot.val() ', snapshot.val().createdAt);
@@ -93,6 +96,7 @@ export default class Chats extends Component {
           recieverUid: snapshot.val().recieverUid,
           senderUid: snapshot.val().senderUid
         });
+        console.log('arrayList ', arrayList);
         resolve(arrayList)
       });
     });
@@ -124,7 +128,7 @@ export default class Chats extends Component {
         <Header
           containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
-          centerComponent={{ text: 'Chat', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          centerComponent={{ text: 'Chat', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10  } }}
           leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
           linearGradientProps={{
             colors: ['#E64A19', '#D84315'],

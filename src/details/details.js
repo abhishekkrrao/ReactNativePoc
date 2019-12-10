@@ -16,8 +16,8 @@ export default class Details extends Component {
         <Header
           containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
-          centerComponent={{ text: 'Details', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
-          leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
+          centerComponent={{ text: 'Details', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10  } }}
+          leftComponent={{ icon: 'arrow-back', color: '#fff', paddingBottom: 10 , onPress: () => this.closeApp() }}
           linearGradientProps={{
             colors: ['#E64A19', '#D84315'],
             start: { x: 0, y: 0.5 },

@@ -27,7 +27,7 @@ export default class signUp extends Component {
 
     writeUserData(email) {
         firebase.auth().onAuthStateChanged(user => {
-            firebase.database().ref('Users/').push({email:email,uid:user.uid}).then((data) => {
+            firebase.database().ref('Users/'+user.uid).set({email:email,uid:user.uid,profilePic:'https://bootdey.com/img/Content/avatar/avatar6.png'}).then((data) => {
                 //success callback
                 console.log('data ', data)
             }).catch((error) => {

@@ -50,6 +50,8 @@ target 'PschedoProject' do
   
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
+  pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
+
   target 'PschedoProjectTests' do
     inherit! :search_paths
     # Pods for testing

@@ -14,11 +14,9 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import firebase from 'react-native-firebase'
 
-
 const TabNavigator = createBottomTabNavigator({
     Home: {
         screen: Home,
-
         navigationOptions: {
             title: "Home",
             headerLeft: null,
@@ -31,8 +29,7 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         }
-    },
-    profile: {
+    }, profile: {
         screen: profile,
         navigationOptions: ({ navigation }) => ({
             title: "User List",
@@ -46,9 +43,7 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         })
-    },
-    App:
-    {
+    }, App: {
         screen: App,
         navigationOptions: {
             title: "Settings",
@@ -62,9 +57,7 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         }
-    },
-    Modals:
-    {
+    }, Modals: {
         screen: Modals,
         navigationOptions: {
             title: "Profile",
@@ -79,8 +72,7 @@ const TabNavigator = createBottomTabNavigator({
             }
         }
     },
-},
-    {
+}, {
         defaultNavigationOptions: ({ navigation }) => ({
             tabBarIcon: ({ focused, horizontal, tintColor }) => {
                 const { routeName } = navigation.state;
@@ -112,13 +104,13 @@ const TabNavigator = createBottomTabNavigator({
                         );
                 }
             },
-        }),
-        tabBarOptions: {
-            activeTintColor: '#FF6F00',
+        }), tabBarOptions: {
+            activeTintColor:'#000',
             inactiveTintColor: '#263238',
+            activeBackgroundColor: '#FF6F00',
             style: { height: 60 }
         },
-    })
+    });
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
@@ -136,9 +128,7 @@ const AppNavigator = createStackNavigator({
             gesturesEnabled: false,
         }
     });
-
 const AppContainer = createAppContainer(AppNavigator);
-
 export default class Navigator extends Component {
     state = { currentUser: '' }
     render() {
@@ -168,10 +158,10 @@ export default class Navigator extends Component {
             appId: "1:1030315320618:web:9a0f537b4125a0f819aa53",
             measurementId: "G-ESXJTMWFNX"
         }
-
-        firebase.initializeApp(
-            Platform.OS === 'ios' ? iosConfig : androidConfig
-        );
+        // console.log('firebase.app.length ',  Platform.OS === 'ios' ? iosConfig : androidConfig);
+        if (firebase.app.length > 0) {
+            firebase.initializeApp(Platform.OS === 'ios' ? iosConfig : androidConfig);
+        }
     }
 
 

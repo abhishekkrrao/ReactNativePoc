@@ -19,17 +19,17 @@
 	<key>PROJECT_ID</key>
 	<string>pschedoproject</string>
 	<key>STORAGE_BUCKET</key>
-	<string>pschedoproject.appspot.com</string>
+	<string>gs://pschedoproject.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_ANALYTICS_ENABLED</key>
-	<false></false>
+	<false/>
 	<key>IS_APPINVITE_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_GCM_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>IS_SIGNIN_ENABLED</key>
-	<true></true>
+	<true/>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:1030315320618:ios:a5046d75075c029a19aa53</string>
 	<key>DATABASE_URL</key>

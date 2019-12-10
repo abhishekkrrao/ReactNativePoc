@@ -250,7 +250,7 @@ export default class App extends Component {
         <Header
          containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
-          centerComponent={{ text: 'Setting', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          centerComponent={{ text: 'Setting', style: { color: '#fff', fontFamily: "Montserrat-Medium" , paddingBottom: 10 } }}
           // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
           linearGradientProps={{
             colors: ['#E64A19', '#D84315'],

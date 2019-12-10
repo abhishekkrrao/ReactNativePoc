@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, View, Text, FlatList, Alert, Image, TouchableHighlight } from "react-native";
+import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight, Button } from "react-native";
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 const styles = StyleSheet.create({
@@ -40,14 +40,28 @@ const styles = StyleSheet.create({
     fontWeight: '500'
   }
 });
-
-
 export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoading: true }
+   
   }
   componentDidMount() {
+    // return fetch('https://facebook.github.io/react-native/movies.json')
+    //   .then((response) => response.json())
+    //   .then((responseJson) => {
+    //     this.setState({
+    //       isLoading: false,
+    //       dataSource: mediaJSON.categories[0].videos,
+    //     }, function () {
+    //     });
+    //   }).catch((error) => {
+    //     console.error(error);
+    //   });
+
+    this.showItem();
+  }
+  showItem() {
     var mediaJSON = {
       "categories": [{
         "name": "Movies",
@@ -146,33 +160,23 @@ export default class Home extends Component {
         ]
       }]
     };
-    return fetch('https://facebook.github.io/react-native/movies.json')
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this.setState({
-          isLoading: false,
-          dataSource: mediaJSON.categories[0].videos,
-        }, function () {
-        });
-      }).catch((error) => {
-        console.error(error);
-      });
-
+    this.setState({
+      isLoading: false,
+      dataSource: mediaJSON.categories[0].videos,
+    });
   }
-
   closeApp() {
-    // console.log('close App');
     this.props.navigation.goBack();
   }
-
   render() {
     const br = `\n`;
+
     return (
       <View style={styles.MainContainer}>
         <Header
           containerStyle={{ height: 75 }}
           ViewComponent={LinearGradient} // Don't forget this!
-          centerComponent={{ text: 'Home', style: { color: '#fff', fontFamily: "Montserrat-Medium" } }}
+          centerComponent={{ text: 'Home', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10 } }}
           linearGradientProps={{
             colors: ['#E64A19', '#D84315'],
             start: { x: 0, y: 0.5 },
@@ -182,18 +186,16 @@ export default class Home extends Component {
         <FlatList
           data={this.state.dataSource}
           ItemSeparatorComponent={this.FlatListItemSeparator}
-          renderItem={({ item, index }) => {
+          renderItem={({ item }) => {
             return (
               <View style={{ flex: 1 }}>
                 <TouchableHighlight onPress={() => this.props.navigation.navigate('Details', { item: item })} style={styles.imageView} >
                   <Image source={{ uri: item.sources }} style={styles.imageViews} />
                 </TouchableHighlight>
                 <Text style={styles.textView} >{item.title}{br}{br}{item.description}</Text>
-
               </View>
             )
-          }
-          }
+          }}
           keyExtractor={(item, index) => index.toString()}
         />
       </View>
