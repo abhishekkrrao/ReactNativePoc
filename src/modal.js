@@ -4,9 +4,7 @@ import {
   StyleSheet,
   Text,
   View,
-  Image,
-  Platform,
-  Alert
+  Image
 } from 'react-native';
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -14,11 +12,21 @@ import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Dialog from "react-native-dialog";
+import Loading from './Loading'
 export default class Modals extends Component {
   state = {
     email: '',
     uid: '',
-    avatarSource: 'https://bootdey.com/img/Content/avatar/avatar6.png'
+    avatarSource: 'https://bootdey.com/img/Content/avatar/avatar6.png',
+    isLoading: false
+  }
+
+  showLoading() {
+    if (this.state.isLoading == true) {
+      return (
+        <Loading></Loading>
+      )
+    }
   }
 
 
@@ -36,7 +44,7 @@ export default class Modals extends Component {
   }
 
   getImageFromCamera() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       ImagePicker.openCamera({
         width: 300,
         height: 300,
@@ -55,13 +63,13 @@ export default class Modals extends Component {
     });
   }
   getImageFromGallery() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       ImagePicker.openPicker({
         width: 300,
         height: 300,
         cropping: false
       }).then(image => {
-        console.log(image);
+
         this.setState({
           avatarSource: image.path
         });
@@ -77,7 +85,6 @@ export default class Modals extends Component {
         height: 300,
         cropping: false
       }).then(image => {
-        console.log(image);
         this.setState({
           avatarSource: image.path
         });
@@ -93,37 +100,34 @@ export default class Modals extends Component {
       profilePic,
     });
   }
+
   uploadProfilePic() {
     return new Promise(() => {
       this.pickImage().then(() => {
-        // let uploadUri = Platform.OS === 'ios' ? this.state.avatarSource.replace('file://', '') : this.state.avatarSource;
         let uploadUri = decodeURI(this.state.avatarSource)
+        console.log('uploadUri>>> ', uploadUri);
         const userId = firebase.auth().currentUser.uid;
         console.log('userId>>> ', userId);
-        let fileName = new Date().getTime();
-        const ref = firebase.storage().ref(`images/${userId}`).child(fileName);
+        const ref = firebase.storage().ref(`images/${userId}`).child(userId);
         console.log('ref>>> ', ref);
         ref.putFile(uploadUri).on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
           if (snapshot.state === firebase.storage.TaskState.SUCCESS) {
             console.log('snapshot.downloadURL ', snapshot.downloadURL);
+            this.updateSingleData(snapshot.downloadURL);
+            this.setState({
+              isLoading: false
+            })
           }
         });
-        // firebase.storage().ref(`images/${this.state.uid}`).putFile(uploadUri).on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
-        //   if (snapshot.state === firebase.storage.TaskState.SUCCESS) {
-        //     console.log('snapshot.downloadURL ', snapshot.downloadURL);
-        //     this.updateSingleData(snapshot.downloadURL);
-        //     resolve(snapshot.downloadURL);
-        //   }
-        // }, (error) => {
-        //   console.log(error);
-        //   reject(error);
-        // });
       });
     })
   }
 
   uploadImage() {
     try {
+      this.setState({
+        isLoading: true
+      })
       this.uploadProfilePic().then((path) => {
         console.log(path);
       });
@@ -140,8 +144,18 @@ export default class Modals extends Component {
     console.log('useruser>> ', user.email);
     this.setState({
       email: user.email,
-      uid: user.uid
+      uid: user.uid,
+      isLoading:true
     });
+
+    var ref = firebase.database().ref('Users/' + user.uid);
+    ref.once('value').then(snapshot => {
+      console.log('snapshot.val() ', snapshot.val());
+      this.setState({
+        avatarSource: snapshot.val().profilePic,
+        isLoading:false
+      })
+    })
   }
   closeApp() {
     firebase.auth().signOut();
@@ -176,12 +190,16 @@ export default class Modals extends Component {
           </View>
         </View>
         <View style={styles.body}>
+
+          <View style={styles.item}>
+            {this.showLoading()}
+          </View>
           <View style={styles.item}>
             <View style={styles.iconContent}>
-              <TouchableHighlight>
+              <TouchableHighlight onPress={() => this.closeApp()}>
                 <Icon
                   raised
-                  name='close'
+                  name='./assets/logout.svg'
                   color='#000000'
                   onPress={() => this.closeApp()} />
               </TouchableHighlight>
@@ -189,7 +207,9 @@ export default class Modals extends Component {
             <View style={styles.infoContent}>
               <Text style={styles.info}>Log Out</Text>
             </View>
+
           </View>
+
         </View>
       </View>
     );

@@ -11,7 +11,6 @@ import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
-
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 

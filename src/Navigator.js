@@ -105,7 +105,7 @@ const TabNavigator = createBottomTabNavigator({
                 }
             },
         }), tabBarOptions: {
-            activeTintColor:'#000',
+            activeTintColor: '#000',
             inactiveTintColor: '#263238',
             activeBackgroundColor: '#FF6F00',
             style: { height: 60 }
@@ -142,7 +142,7 @@ export default class Navigator extends Component {
             clientId: '1030315320618-upbact3r9qu7iccvqd1pl74rnp95ks64.apps.googleusercontent.com',
             appId: '1:1030315320618:ios:a5046d75075c029a19aa53',
             databaseURL: 'https://pschedoproject.firebaseio.com/',
-            storageBucket: 'gs://pschedoproject.appspot.com',
+            storageBucket: 'pschedoproject.appspot.com',
             messagingSenderId: '1030315320618',
             projectId: 'pschedoproject',
             persistence: true,
@@ -160,12 +160,10 @@ export default class Navigator extends Component {
         }
         // console.log('firebase.app.length ',  Platform.OS === 'ios' ? iosConfig : androidConfig);
         if (firebase.app.length > 0) {
+;
             firebase.initializeApp(Platform.OS === 'ios' ? iosConfig : androidConfig);
         }
     }
-
-
-
     componentDidMount() {
         this.initFirebaseApp();
         let initialRouteName = 'Loading';

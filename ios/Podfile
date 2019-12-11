@@ -46,8 +46,6 @@ target 'PschedoProject' do
   pod 'Firebase/Storage'
   # pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
   pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
-  
-  
   pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
 
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
