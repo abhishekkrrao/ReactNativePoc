@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Home from './home'
 import App from './../App'
 import Details from './details/details'
+import addproduct from './addproduct/addproduct'
 import Chats from './chat/chat'
 import Modals from './modal'
 import Loading from './Loading'
@@ -43,10 +44,10 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         })
-    }, App: {
-        screen: App,
+    }, addproduct: {
+        screen: addproduct,
         navigationOptions: {
-            title: "Settings",
+            title: "Add Product",
             headerLeft: null,
             gesturesEnabled: false,
             header: {
@@ -90,7 +91,7 @@ const TabNavigator = createBottomTabNavigator({
                                 source={require('./assets/settings.png')}
                                 style={{ width: 20, height: 20 }} />
                         );
-                    case 'App':
+                    case 'addproduct':
                         return (
                             <Image
                                 source={require('./assets/contacts.png')}
@@ -118,6 +119,7 @@ const AppNavigator = createStackNavigator({
     Chats: { screen: Chats },
     signUp: { screen: signUp },
     profile: { screen: profile },
+    addproduct: { screen: addproduct },
     Login: { screen: Login },
     Home: { screen: Home },
     Modals: { screen: Modals },

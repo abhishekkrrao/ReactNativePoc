@@ -69,7 +69,6 @@ export default class Modals extends Component {
         height: 300,
         cropping: false
       }).then(image => {
-
         this.setState({
           avatarSource: image.path
         });
@@ -90,6 +89,10 @@ export default class Modals extends Component {
         });
         resolve(image.path);
       }).catch((error) => {
+        this.setState({
+          isLoading: false
+        })
+        console.log(error);
         reject(error);
       });
     });
@@ -145,7 +148,7 @@ export default class Modals extends Component {
     this.setState({
       email: user.email,
       uid: user.uid,
-      isLoading:true
+      isLoading: true
     });
 
     var ref = firebase.database().ref('Users/' + user.uid);
@@ -153,7 +156,7 @@ export default class Modals extends Component {
       console.log('snapshot.val() ', snapshot.val());
       this.setState({
         avatarSource: snapshot.val().profilePic,
-        isLoading:false
+        isLoading: false
       })
     })
   }
@@ -195,21 +198,15 @@ export default class Modals extends Component {
             {this.showLoading()}
           </View>
           <View style={styles.item}>
-            <View style={styles.iconContent}>
+            <View style={{ padding: 5 }}>
               <TouchableHighlight onPress={() => this.closeApp()}>
-                <Icon
-                  raised
-                  name='./assets/logout.svg'
-                  color='#000000'
-                  onPress={() => this.closeApp()} />
+                <Image
+                  style={{ width: 25, height: 25 }}
+                  source={require('./assets/logout.png')}
+                />
               </TouchableHighlight>
             </View>
-            <View style={styles.infoContent}>
-              <Text style={styles.info}>Log Out</Text>
-            </View>
-
           </View>
-
         </View>
       </View>
     );
@@ -269,7 +266,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'flex-end',
     paddingRight: 5,
-    fontFamily: "Montserrat-Medium"
+    fontFamily: "Montserrat-Medium",
+    justifyContent: 'center',
+    textAlignVertical: 'center',
+    textAlign: 'center'
   },
   icon: {
     width: 30,

@@ -50,6 +50,8 @@ target 'PschedoProject' do
 
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
+  pod 'RNSvgImage', :path => '../node_modules/react-native-svg-img'
+
   target 'PschedoProjectTests' do
     inherit! :search_paths
     # Pods for testing
