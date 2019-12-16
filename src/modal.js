@@ -4,7 +4,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Image
+  Image,
+  ScrollView,
+  FlatList
 } from 'react-native';
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,7 +20,8 @@ export default class Modals extends Component {
     email: '',
     uid: '',
     avatarSource: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-    isLoading: false
+    isLoading: false,
+    list: []
   }
 
   showLoading() {
@@ -143,25 +146,80 @@ export default class Modals extends Component {
     this.getCurrentUser();
   }
   getCurrentUser() {
+    let list = [];
     let user = firebase.auth().currentUser;
-    console.log('useruser>> ', user.email);
+    //console.log('useruser>> ', user.email);
     this.setState({
       email: user.email,
       uid: user.uid,
       isLoading: true
     });
 
-    var ref = firebase.database().ref('Users/' + user.uid);
-    ref.once('value').then(snapshot => {
-      console.log('snapshot.val() ', snapshot.val());
+    this.getUserDetails().then((profilePic) => {
+      console.log('snapshotprofilePic>> ',profilePic);
+    }).catch(() => { })
+
+
+    this.getUserProductList().then((list) => {
       this.setState({
-        avatarSource: snapshot.val().profilePic,
-        isLoading: false
+        list: list
       })
+    }).catch((error) => {
+      console.log('error>>> ', error);
+    })
+
+  }
+
+  getUserDetails() {
+    return new Promise((resolve, reject) => {
+      let path = 'Users/' + user.uid;
+      console.log('pathpath>>> ', path);
+      var ref = firebase.database().ref(path);
+      ref.once('value').then(snapshot => {
+        this.setState({
+          avatarSource: snapshot.val().profilePic,
+          isLoading: false
+        })
+        resolve(snapshot.val().profilePic)
+      }).catch((error) => {
+        reject(error)
+      });
     })
   }
+
+  getUserProductList() {
+    let list = [];
+    return new Promise((resolve, reject) => {
+      let path = 'addProduct/' + firebase.auth().currentUser.uid;
+      var productRef = firebase.database().ref(path);
+      productRef.once('value').then(snapshot => {
+        Object.values(snapshot.val()).map(o => { list.push(o); });
+        resolve(list)
+      }).catch((error) => { reject(error) });
+    });
+  }
+
   closeApp() {
     firebase.auth().signOut();
+  }
+
+  renderRow(item) {
+    console.log('productPic ', item.productPic)
+    return (
+      <View style={{
+        borderRadius: 5,
+        margin: 5,
+        width: 150,
+        height: 150,
+        flex: 1
+      }}>
+        <View style={{ width: 150 ,height:150}}>
+          <TouchableHighlight style={{ padding: 5 }} >
+            <Image source={{ uri: item.productPic }} style={{ width: 150, height: 150, borderRadius: 5 }} />
+          </TouchableHighlight>
+        </View>
+      </View>
+    )
   }
   render() {
     var data = this.state.email;
@@ -180,34 +238,74 @@ export default class Modals extends Component {
           }}
         />
 
-        <View style={styles.header}>
-          <View style={styles.headerContent}>
-            <TouchableHighlight onPress={() => this.uploadImage()} style={styles.avatar1} >
-              <Image style={styles.avatar}
-                source={{ uri: this.state.avatarSource }} />
-            </TouchableHighlight>
+        <ScrollView
+          style={{ flex: 1, width: '100%' }}
+          horizontal={false}
+        >
 
-            <Text style={styles.name}>{name} </Text>
-            <Text style={styles.userInfo}>{data} </Text>
-            <Text style={styles.userInfo}>India </Text>
-          </View>
-        </View>
-        <View style={styles.body}>
 
-          <View style={styles.item}>
-            {this.showLoading()}
-          </View>
-          <View style={styles.item}>
-            <View style={{ padding: 5 }}>
-              <TouchableHighlight onPress={() => this.closeApp()}>
-                <Image
-                  style={{ width: 25, height: 25 }}
-                  source={require('./assets/logout.png')}
-                />
+
+          <View style={styles.header}>
+            <View style={styles.headerContent}>
+              <TouchableHighlight onPress={() => this.uploadImage()} style={styles.avatar1} >
+                <Image style={styles.avatar}
+                  source={{ uri: this.state.avatarSource }} />
               </TouchableHighlight>
+
+              <Text style={styles.name}>{name} </Text>
+              <Text style={styles.userInfo}>{data} </Text>
+              <Text style={styles.userInfo}>India </Text>
             </View>
           </View>
-        </View>
+          <View style={styles.body}>
+            <View style={styles.item}>
+              {this.showLoading()}
+            </View>
+            <View style={styles.item}>
+              <View style={{ padding: 5 }}>
+                <TouchableHighlight onPress={() => this.closeApp()}>
+                  <Image
+                    style={{ width: 25, height: 25 }}
+                    source={require('./assets/logout.png')}
+                  />
+                </TouchableHighlight>
+              </View>
+            </View>
+          </View>
+
+          <View style={{ flex: 1, width: '100%' }}>
+            <Text style={{fontSize:21,fontFamily:'Montserrat-Medium',padding:5,fontWeight:'bold'}}>{'Your Product List'}</Text>
+            <ScrollView
+              style={{ flex: 1, width: '100%' }}
+              horizontal={true}
+              decelerationRate={0}
+              snapToInterval={150} //your element width
+              snapToAlignment={"center"}
+              scrollEnabled={true}>{
+                this.state.list.map((item, index) => {
+                  return this.renderRow(item)
+                })
+              }
+            </ScrollView>
+          </View>
+
+          <View style={{ flex: 1, width: '100%'}}>
+            <Text style={{ fontSize: 21, fontFamily: 'Montserrat-Medium', padding: 5, fontWeight: 'bold' }}>{'All Product List'}</Text>
+            <ScrollView
+              style={{ flex: 1, width: '100%' }}
+              horizontal={true}
+              decelerationRate={0}
+              snapToInterval={150} //your element width
+              snapToAlignment={"center"}
+              scrollEnabled={true}>{
+                this.state.list.map((item, index) => {
+                  return this.renderRow(item)
+                })
+              }
+            </ScrollView>
+          </View>
+
+        </ScrollView>
       </View>
     );
   }
@@ -249,7 +347,7 @@ const styles = StyleSheet.create({
   },
   body: {
     backgroundColor: "#778899",
-    height: 500,
+    height: 50,
     alignItems: 'center',
     fontFamily: "Montserrat-Medium"
   },

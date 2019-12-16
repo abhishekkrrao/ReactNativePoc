@@ -42,9 +42,11 @@ export default class addproduct extends React.Component {
     }
     saveProduct() {
         console.log('isPicUpload', this.state.isPicUpload)
+        console.log('getTime', new Date().getTime());
         const userId = firebase.auth().currentUser.uid;
         if (this.state.isPicUpload) {
-            firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => { console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
+            // firebase.database().ref('addProduct/' + new Date().getTime()).set(this.state).then((result) => { this.props.navigation.navigate('Home');console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
+             firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => { this.props.navigation.navigate('Home');console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
         } else {
             alert('Please add a picture')
         }
@@ -56,7 +58,7 @@ export default class addproduct extends React.Component {
                 console.log('uploadUri>>> ', uploadUri);
                 const userId = firebase.auth().currentUser.uid;
                 console.log('userId>>> ', userId);
-                const ref = firebase.storage().ref(`images/${userId}`).child(userId);
+                const ref = firebase.storage().ref(`images/${new Date().getTime()}`).child(userId);
                 console.log('ref>>> ', ref);
                 ref.putFile(uploadUri).on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
                     if (snapshot.state === firebase.storage.TaskState.SUCCESS) {
