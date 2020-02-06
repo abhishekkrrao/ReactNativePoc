@@ -1,10 +1,9 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button, TouchableHighlight, ImageBackground, Image } from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight, Image } from 'react-native'
 import addproductcss from './addproductcss'
 import firebase from 'react-native-firebase'
-import { Header } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
 import ImagePicker from 'react-native-image-crop-picker';
+import Headers from '../header/header'
 export default class addproduct extends React.Component {
     state = { isLoading: false, productName: '', productDesc: '', productPic: 'https://bootdey.com/img/Content/avatar/avatar6.png', productPrice: '', productType: '', productSubType: '', isPicUpload: false }
     addProduct() {
@@ -46,13 +45,13 @@ export default class addproduct extends React.Component {
         const userId = firebase.auth().currentUser.uid;
         if (this.state.isPicUpload) {
             // firebase.database().ref('addProduct/' + new Date().getTime()).set(this.state).then((result) => { this.props.navigation.navigate('Home');console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
-             firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => { this.props.navigation.navigate('Home');console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
+            firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => { this.props.navigation.navigate('Home'); console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
         } else {
             alert('Please add a picture')
         }
     }
     uploadProductPic() {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
             this.pickImage().then(() => {
                 let uploadUri = decodeURI(this.state.productPic)
                 console.log('uploadUri>>> ', uploadUri);
@@ -79,18 +78,7 @@ export default class addproduct extends React.Component {
     render() {
         return (
             <View style={addproductcss.container}>
-
-                <Header
-                    containerStyle={{ height: 75 }}
-                    ViewComponent={LinearGradient} // Don't forget this!
-                    centerComponent={{ text: 'Add Product', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 15 } }}
-                    // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
-                    linearGradientProps={{
-                        colors: ['#E64A19', '#D84315'],
-                        start: { x: 0, y: 0.5 },
-                        end: { x: 1, y: 0.5 },
-                    }}
-                />
+                <Headers title="Add Product"></Headers>
                 <TextInput
                     style={addproductcss.textInput}
                     autoCapitalize="none"
@@ -132,7 +120,7 @@ export default class addproduct extends React.Component {
                         Add Product Pic
                     </Text>
                     <TouchableHighlight style={{ flex: 1, width: 50, height: 50, alignContent: 'flex-end', justifyContent: 'flex-end' }} onPress={() => this.uploadProductPic()}>
-                        <Image style={{ flex: 1, padding: 5, width: 50, height: 50, alignContent: 'flex-end',alignSelf:'flex-end' }} source={{ uri: this.state.productPic }} />
+                        <Image style={{ flex: 1, padding: 5, width: 50, height: 50, alignContent: 'flex-end', alignSelf: 'flex-end' }} source={{ uri: this.state.productPic }} />
                     </TouchableHighlight>
                 </View>
                 <View style={{ flex: 1, margin: 0, height: 55, padding: 0, alignSelf: 'flex-end', marginEnd: 15 }}>
@@ -140,7 +128,6 @@ export default class addproduct extends React.Component {
                         <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#f57538', alignSelf: 'flex-end' }} color='#fff' title="Add Product" onPress={() => this.saveProduct()} />
                     </TouchableHighlight>
                 </View>
-
             </View>
         )
     }

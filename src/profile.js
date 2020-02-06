@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import { StyleSheet, View, FlatList, TouchableHighlight, Text, Image, TouchableOpacity, Alert } from "react-native";
+import { StyleSheet, View, FlatList, TouchableHighlight, Text, Image } from "react-native";
 import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
-import { Header } from 'react-native-elements';
 import Loading from './Loading'
-import LinearGradient from 'react-native-linear-gradient';
+import Headers from './header/header'
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -27,9 +26,9 @@ export default class profile extends Component {
         this.readUserData();
     }
     readUserData() {
-        return new Promise((resolve,reject)=>{
+        return new Promise(()=>{
             firebase.auth().onAuthStateChanged(user => {
-                this.getList(user.uid).then((list) => {
+                this.getList().then((list) => {
                     this.setState({
                         currentUSERUID:user.uid,
                         list: list,
@@ -40,20 +39,9 @@ export default class profile extends Component {
         });
     }
 
-    getList(uid) {
-        return new Promise((resolve, reject) => {
+    getList() {
+        return new Promise((resolve) => {
             const arrayList = [];
-            // var recentPostsRef = firebase.database().ref('Users/');
-            // recentPostsRef.once('value').then(snapshot => {
-            //     console.log('snapshot.val() ', snapshot.val().email);
-            //     arrayList.push({
-            //         email: snapshot.val().email,
-            //         name: snapshot.val().email.substring(0, snapshot.val().email.lastIndexOf("@")),
-            //         avatar_url: 'https://bootdey.com/img/Content/avatar/avatar6.png',
-            //         uid: snapshot.val().uid
-            //     });
-            //     resolve(arrayList);
-            // })
             var ref = firebase.database().ref('Users/');
             ref.orderByChild('email').on('child_added', function (snapshot) {
                 arrayList.push({
@@ -115,23 +103,13 @@ export default class profile extends Component {
         }else{
              return (
                 <View style={styles.container}>
-                    <Header
-                        containerStyle={{ height: 75 }}
-                        ViewComponent={LinearGradient}
-                        centerComponent={{ text: 'User List', style: { color: '#fff', fontFamily: "Montserrat-Medium" , paddingBottom: 10 } }}
-                        // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
-                        linearGradientProps={{
-                            colors: ['#E64A19', '#D84315'],
-                            start: { x: 0, y: 0.5 },
-                            end: { x: 1, y: 0.5 },
-                        }}
-                    />
+                    <Headers title="User List"></Headers>
                     <FlatList
                         data={this.state.list}
-                        renderItem={({ item, i }) => {
+                        renderItem={({ item }) => {
                             return this.renderRow(item)
                         }}
-                        keyExtractor={({ item, index }) => index + 'llll'}
+                        keyExtractor={({ index }) => index + 'llll'}
                     />
                 </View>
             )

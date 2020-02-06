@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight, Button } from "react-native";
-import { Header } from 'react-native-elements';
+import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight } from "react-native";
 import firebase from 'react-native-firebase'
-import LinearGradient from 'react-native-linear-gradient';
 import Loading from './Loading'
+import Headers from './header/header'
 const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: 'center',
@@ -50,7 +49,7 @@ export default class Home extends Component {
 
   parseIntoArray(value) {
     const arrayList = [];
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       Object.values(value).map(o => Object.values(o).map(o => arrayList.push(o)));
 
       resolve(arrayList)
@@ -59,7 +58,6 @@ export default class Home extends Component {
 
   getList() {
     return new Promise((resolve, reject) => {
-      const arrayList = [];
       var recentPostsRef = firebase.database().ref('addProduct/');
       recentPostsRef.once('value').then(snapshot => {
         // console.log('snapshot.val() ', snapshot.val());
@@ -106,16 +104,9 @@ export default class Home extends Component {
     } else {
       return (
         <View style={styles.MainContainer}>
-          <Header
-            containerStyle={{ height: 75 }}
-            ViewComponent={LinearGradient} // Don't forget this!
-            centerComponent={{ text: 'Home', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10 } }}
-            linearGradientProps={{
-              colors: ['#E64A19', '#D84315'],
-              start: { x: 0, y: 0.5 },
-              end: { x: 1, y: 0.5 },
-            }}
-          />
+
+          <Headers title="Home"></Headers>
+  
           <FlatList
             data={this.state.dataSource}
             ItemSeparatorComponent={this.FlatListItemSeparator}
