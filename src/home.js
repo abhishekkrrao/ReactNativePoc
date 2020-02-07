@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight } from "rea
 import firebase from 'react-native-firebase'
 import Loading from './Loading'
 import Headers from './header/header'
+
 const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: 'center',
@@ -16,7 +17,7 @@ const styles = StyleSheet.create({
   },
   imageViews: {
     width: '100%',
-    height: 300,
+    height: 350,
     flex: 1,
     padding: 0,
     margin: 0
@@ -51,7 +52,6 @@ export default class Home extends Component {
     const arrayList = [];
     return new Promise((resolve) => {
       Object.values(value).map(o => Object.values(o).map(o => arrayList.push(o)));
-
       resolve(arrayList)
     });
   }
@@ -60,8 +60,6 @@ export default class Home extends Component {
     return new Promise((resolve, reject) => {
       var recentPostsRef = firebase.database().ref('addProduct/');
       recentPostsRef.once('value').then(snapshot => {
-        // console.log('snapshot.val() ', snapshot.val());
-        // Object.values(snapshot.val()).map(o => Object.values(o).map(o => arrayList.push(o)))
         this.parseIntoArray(snapshot.val()).then((list) => {
           resolve(Array.from(new Set([...list])));
         }).catch(() => { })
@@ -82,7 +80,8 @@ export default class Home extends Component {
       });
     });
   }
-  componentDidMount() {
+  _refresh() {
+    this.state.isLoading = false;
     this.getList().then((list) => {
       console.log('list', list)
       this.setState({
@@ -91,6 +90,7 @@ export default class Home extends Component {
       });
     });
   }
+
   closeApp() {
     this.props.navigation.goBack();
   }
@@ -104,12 +104,12 @@ export default class Home extends Component {
     } else {
       return (
         <View style={styles.MainContainer}>
-
           <Headers title="Home"></Headers>
-  
           <FlatList
             data={this.state.dataSource}
             ItemSeparatorComponent={this.FlatListItemSeparator}
+            onRefresh={() => this._refresh()}
+            refreshing={this.state.isLoading}
             renderItem={({ item }) => {
               return (
                 <View style={{ flex: 1, backgroundColor: '#ccc', margin: 5, padding: 0, borderRadius: 7, }}>

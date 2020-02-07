@@ -74,44 +74,44 @@ const TabNavigator = createBottomTabNavigator({
         }
     },
 }, {
-        defaultNavigationOptions: ({ navigation }) => ({
-            tabBarIcon: ({ focused, horizontal, tintColor }) => {
-                const { routeName } = navigation.state;
-                console.log(routeName)
-                switch (routeName) {
-                    case 'Home':
-                        return (
-                            <Image
-                                source={require('./assets/home.png')}
-                                style={{ width: 20, height: 20 }} />
-                        );
-                    case 'Modals':
-                        return (
-                            <Image
-                                source={require('./assets/settings.png')}
-                                style={{ width: 20, height: 20 }} />
-                        );
-                    case 'addproduct':
-                        return (
-                            <Image
-                                source={require('./assets/contacts.png')}
-                                style={{ width: 20, height: 20 }} />
-                        );
-                    case 'profile':
-                        return (
-                            <Image
-                                source={require('./assets/contacts.png')}
-                                style={{ width: 20, height: 20 }} />
-                        );
-                }
-            },
-        }), tabBarOptions: {
-            activeTintColor: '#000',
-            inactiveTintColor: '#263238',
-            activeBackgroundColor: '#FF6F00',
-            style: { height: 60 }
+    defaultNavigationOptions: ({ navigation }) => ({
+        tabBarIcon: ({ focused, horizontal, tintColor }) => {
+            const { routeName } = navigation.state;
+            console.log(routeName)
+            switch (routeName) {
+                case 'Home':
+                    return (
+                        <Image
+                            source={require('./assets/home.png')}
+                            style={{ width: 20, height: 20 }} />
+                    );
+                case 'Modals':
+                    return (
+                        <Image
+                            source={require('./assets/settings.png')}
+                            style={{ width: 20, height: 20 }} />
+                    );
+                case 'addproduct':
+                    return (
+                        <Image
+                            source={require('./assets/contacts.png')}
+                            style={{ width: 20, height: 20 }} />
+                    );
+                case 'profile':
+                    return (
+                        <Image
+                            source={require('./assets/contacts.png')}
+                            style={{ width: 20, height: 20 }} />
+                    );
+            }
         },
-    });
+    }), tabBarOptions: {
+        activeTintColor: '#000',
+        inactiveTintColor: '#263238',
+        activeBackgroundColor: '#FF6F00',
+        style: { height: 60 }
+    },
+});
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
     App: { screen: App },
@@ -125,11 +125,11 @@ const AppNavigator = createStackNavigator({
     Modals: { screen: Modals },
     Tabs: { screen: TabNavigator },
 }, {
-        headerMode: 'none',
-        defaultNavigationOptions: {
-            gesturesEnabled: false,
-        }
-    });
+    headerMode: 'none',
+    defaultNavigationOptions: {
+        gesturesEnabled: false,
+    }
+});
 const AppContainer = createAppContainer(AppNavigator);
 export default class Navigator extends Component {
     state = { currentUser: '' }
@@ -162,7 +162,7 @@ export default class Navigator extends Component {
         }
         // console.log('firebase.app.length ',  Platform.OS === 'ios' ? iosConfig : androidConfig);
         if (firebase.app.length > 0) {
-;
+            ;
             firebase.initializeApp(Platform.OS === 'ios' ? iosConfig : androidConfig);
         }
     }
