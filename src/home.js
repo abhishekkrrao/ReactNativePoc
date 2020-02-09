@@ -3,7 +3,7 @@ import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight } from "rea
 import firebase from 'react-native-firebase'
 import Loading from './Loading'
 import Headers from './header/header'
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 const styles = StyleSheet.create({
   MainContainer: {
     justifyContent: 'center',
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
     fontSize: 9,
     fontFamily: "Montserrat-Medium",
     fontWeight: '500'
-  }
+  },
+  custom_view: { flex: 1, backgroundColor: '#ffffff', margin: 5, padding: 0, borderRadius: 7, }
 });
 export default class Home extends Component {
   constructor(props) {
@@ -112,13 +113,27 @@ export default class Home extends Component {
             refreshing={this.state.isLoading}
             renderItem={({ item }) => {
               return (
-                <View style={{ flex: 1, backgroundColor: '#ccc', margin: 5, padding: 0, borderRadius: 7, }}>
+                <View style={styles.custom_view}>
                   <TouchableHighlight onPress={() => this.props.navigation.navigate('Details', { item: item })} style={styles.imageView} >
                     <Image source={{ uri: item.productPic }} style={styles.imageViews} />
                   </TouchableHighlight>
                   <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Text style={styles.textView} > {item.productName} {br} {item.productPrice} {'₹'} </Text>
-                    <Text style={styles.textView} >{item.productDesc}</Text>
+                    <Text style={styles.textView} > {item.productName} {br} {br} {item.productPrice} {'₹'} </Text>
+                    <Text style={styles.textView} >{item.productDesc} {br} {br} {item.productPrice} {'₹'}</Text>
+                  </View>
+                  <View style={{ flex: 2, flexDirection: 'row' }}>
+                    <View style={{ padding: 10 }}>
+                      <Icon name="comment" size={30} color="#900" />
+                    </View>
+                    <View style={{ padding: 10 }}>
+                      <Icon name="mail-forward" size={30} color="#900" />
+                    </View>
+                    <View style={{ padding: 10 }}>
+                      <Icon name="bookmark" size={30} color="#900" />
+                    </View>
+                    <View style={{ padding: 10 }}>
+                      <Icon onPress={() => this.props.navigation.navigate('Details')} name="heart" size={30} color="#900" />
+                    </View>
                   </View>
                 </View>
               )

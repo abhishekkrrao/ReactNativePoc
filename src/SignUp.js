@@ -68,7 +68,7 @@ export default class signUp extends Component {
                     value={this.state.password}
                 />
                 <TouchableHighlight style={styles.buttonCss}>
-                    <Button style={{ fontFamily: "Montserrat-Medium" }} title="Sign Up" color='#fff'  onPress={this.handleSignUp} />
+                    <Button style={{ fontFamily: "Montserrat-Medium" }} title="Sign Up" color='#000'  onPress={this.handleSignUp} />
                 </TouchableHighlight>
 
                 <View style={{ marginTop: 25 }}>

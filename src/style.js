@@ -4,7 +4,7 @@ export default {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#3ea6d6"
+    backgroundColor: "#fff"
   },
   textInput: {
     height: 60,
@@ -20,7 +20,7 @@ export default {
   },
   buttonCss:{
     width:150,
-    backgroundColor:'#FF7538',
+    backgroundColor:'#000',
     height:45,
     color:'#000',
     borderRadius:10,

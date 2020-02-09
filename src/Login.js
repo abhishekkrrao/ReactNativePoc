@@ -74,8 +74,9 @@ export default class Login extends React.Component {
           value={this.state.password}
         />
 
-        <TouchableHighlight style={styles.buttonCss}>
-          <Button style={{ fontFamily: "Montserrat-Medium"}} title="LogIn" color='#fff' onPress={this.handleLogin} />
+
+        <TouchableHighlight style={{ backgroundColor: '#000', width: 150, borderRadius: 15, padding: 5, alignSelf: 'center' }}>
+          <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Login" onPress={() => this.handleLogin()} />
         </TouchableHighlight>
 
         <View style={{ marginTop: 25 }}>

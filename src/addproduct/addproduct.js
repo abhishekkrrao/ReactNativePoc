@@ -124,8 +124,8 @@ export default class addproduct extends React.Component {
                     </TouchableHighlight>
                 </View>
                 <View style={{ flex: 1, margin: 0, height: 55, padding: 0, alignSelf: 'flex-end', marginEnd: 15 }}>
-                    <TouchableHighlight style={{ backgroundColor: '#f57538', borderRadius: 15, padding: 5, alignSelf: 'flex-end' }}>
-                        <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#f57538', alignSelf: 'flex-end' }} color='#fff' title="Add Product" onPress={() => this.saveProduct()} />
+                    <TouchableHighlight style={{ backgroundColor: '#000', borderRadius: 15, padding: 5, alignSelf: 'flex-end' }}>
+                        <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Add Product" onPress={() => this.saveProduct()} />
                     </TouchableHighlight>
                 </View>
             </View>
