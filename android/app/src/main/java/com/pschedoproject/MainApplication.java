@@ -3,10 +3,12 @@ package com.pschedoproject;
 import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.Context;
-
+import cl.json.RNSharePackage;
+import cl.json.ShareApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import cl.json.RNSharePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -37,6 +39,7 @@ public class MainApplication extends Application implements ReactApplication {
             packages.add(new RNFirebaseDatabasePackage()); // <-- Add this line
             new LinearGradientPackage(); // <---- and This!
             packages.add(new RNFirebaseStoragePackage());
+            new RNSharePackage();
             new PickerPackage(); // Add package
           return packages;
         }

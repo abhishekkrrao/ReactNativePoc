@@ -116,7 +116,7 @@ export default class addproduct extends React.Component {
                     value={this.state.productSubType}
                 />
                 <View style={{ flex: 1, flexDirection: 'row', width: "90%", margin: 0, height: 55, padding: 0 }}>
-                    <Text style={{ flex: 1, padding: 5, height: 50 }}>
+                    <Text style={{ flex: 1, padding: 5, height: 50,fontStyle:"900",fontFamily: "Montserrat-Medium", }}>
                         Add Product Pic
                     </Text>
                     <TouchableHighlight style={{ flex: 1, width: 50, height: 50, alignContent: 'flex-end', justifyContent: 'flex-end' }} onPress={() => this.uploadProductPic()}>

@@ -16,7 +16,7 @@ export default class Headers extends Component {
                 centerComponent={{ text: this.props.title, style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 25 } }}
                 // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
                 linearGradientProps={{
-                    colors: ['#E64A19', '#D84315'],
+                    colors: ['#898989', '#898989'],
                     start: { x: 0, y: 0.5 },
                     end: { x: 1, y: 0.5 },
                 }}

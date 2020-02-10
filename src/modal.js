@@ -111,14 +111,14 @@ export default class Modals extends Component {
     return new Promise(() => {
       this.pickImage().then(() => {
         let uploadUri = decodeURI(this.state.avatarSource)
-        console.log('uploadUri>>> ', uploadUri);
+        // console.log('uploadUri>>> ', uploadUri);
         const userId = firebase.auth().currentUser.uid;
-        console.log('userId>>> ', userId);
+        // console.log('userId>>> ', userId);
         const ref = firebase.storage().ref(`images/${userId}`).child(userId);
-        console.log('ref>>> ', ref);
+        //console.log('ref>>> ', ref);
         ref.putFile(uploadUri).on(firebase.storage.TaskEvent.STATE_CHANGED, (snapshot) => {
           if (snapshot.state === firebase.storage.TaskState.SUCCESS) {
-            console.log('snapshot.downloadURL ', snapshot.downloadURL);
+            // console.log('snapshot.downloadURL ', snapshot.downloadURL);
             this.updateSingleData(snapshot.downloadURL);
             this.setState({
               isLoading: false
@@ -156,8 +156,10 @@ export default class Modals extends Component {
     });
 
     this.getUserDetails().then((profilePic) => {
-      console.log('snapshotprofilePic>> ',profilePic);
-    }).catch(() => { })
+      console.log('snapshotprofilePic>> ', profilePic);
+    }).catch((error) => {
+      console.log('error>>> ', error);
+    });
 
 
     this.getUserProductList().then((list) => {
@@ -166,16 +168,17 @@ export default class Modals extends Component {
       })
     }).catch((error) => {
       console.log('error>>> ', error);
-    })
+    });
 
   }
 
   getUserDetails() {
     return new Promise((resolve, reject) => {
-      let path = 'Users/' + user.uid;
+      let path = 'Users/' + firebase.auth().currentUser.uid;
       console.log('pathpath>>> ', path);
       var ref = firebase.database().ref(path);
       ref.once('value').then(snapshot => {
+        console.log('profilePic ', snapshot.val().profilePic);
         this.setState({
           avatarSource: snapshot.val().profilePic,
           isLoading: false
@@ -203,8 +206,54 @@ export default class Modals extends Component {
     firebase.auth().signOut();
   }
 
+  renderChildElement() {
+    if (this.state.list.length > 0) {
+      return (
+        <View style={{ flex: 1, width: '100%', paddingBottom: 10 }}>
+          <Text style={{ fontSize: 21, fontFamily: "Montserrat-Medium", padding: 5, fontWeight: "900" }}>{'All Product List'}</Text>
+          <ScrollView
+            style={{ flex: 1, width: '100%' }}
+            horizontal={true}
+            decelerationRate={0}
+            snapToInterval={150} //your element width
+            snapToAlignment={"center"}
+            scrollEnabled={true}>{
+              this.state.list.map((item, index) => {
+                return this.renderRow(item)
+              })
+            }
+          </ScrollView>
+        </View>
+      )
+    }
+  }
+  renderChildElementAll() {
+    if (this.state.list.length > 0) {
+      return (
+        <View style={{ flex: 1, width: '100%' }}>
+          <Text style={{ fontSize: 21, fontFamily: "Montserrat-Medium", padding: 5, fontWeight: "900" }}>{'Your Product List'}</Text>
+          <ScrollView
+            style={{ flex: 1, width: '100%' }}
+            horizontal={true}
+            decelerationRate={0}
+            snapToInterval={150} //your element width
+            snapToAlignment={"center"}
+            scrollEnabled={true}>{
+              this.state.list.map((item, index) => {
+                return this.renderRow(item)
+              })
+            }
+          </ScrollView>
+        </View>
+      )
+    } 
+  }
+  openPage(item){
+    console.log('modalpage_item ',item);
+
+  }
   renderRow(item) {
-    console.log('productPic ', item.productPic)
+    // console.log('productPic ', item.productPic)
     return (
       <View style={{
         borderRadius: 5,
@@ -213,7 +262,7 @@ export default class Modals extends Component {
         height: 150,
         flex: 1
       }}>
-        <View style={{ width: 150 ,height:150}}>
+        <View style={{ width: 150, height: 150 }}>
           <TouchableHighlight style={{ padding: 5 }} >
             <Image source={{ uri: item.productPic }} style={{ width: 150, height: 150, borderRadius: 5 }} />
           </TouchableHighlight>
@@ -227,12 +276,12 @@ export default class Modals extends Component {
     return (
       <View style={styles.container}>
         <Header
-          containerStyle={{ height: 75 }}
+          containerStyle={{ height: 55 }}
           ViewComponent={LinearGradient} // Don't forget this!
           centerComponent={{ text: 'Profile', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10 } }}
           // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
           linearGradientProps={{
-            colors: ['#E64A19', '#D84315'],
+            colors: ['#ccc', '#ccc'],
             start: { x: 0, y: 0.5 },
             end: { x: 1, y: 0.5 },
           }}
@@ -272,39 +321,8 @@ export default class Modals extends Component {
               </View>
             </View>
           </View>
-
-          <View style={{ flex: 1, width: '100%' }}>
-            <Text style={{fontSize:21,fontFamily:'Montserrat-Medium',padding:5,fontWeight:'bold'}}>{'Your Product List'}</Text>
-            <ScrollView
-              style={{ flex: 1, width: '100%' }}
-              horizontal={true}
-              decelerationRate={0}
-              snapToInterval={150} //your element width
-              snapToAlignment={"center"}
-              scrollEnabled={true}>{
-                this.state.list.map((item, index) => {
-                  return this.renderRow(item)
-                })
-              }
-            </ScrollView>
-          </View>
-
-          <View style={{ flex: 1, width: '100%'}}>
-            <Text style={{ fontSize: 21, fontFamily: 'Montserrat-Medium', padding: 5, fontWeight: 'bold' }}>{'All Product List'}</Text>
-            <ScrollView
-              style={{ flex: 1, width: '100%' }}
-              horizontal={true}
-              decelerationRate={0}
-              snapToInterval={150} //your element width
-              snapToAlignment={"center"}
-              scrollEnabled={true}>{
-                this.state.list.map((item, index) => {
-                  return this.renderRow(item)
-                })
-              }
-            </ScrollView>
-          </View>
-
+          {this.renderChildElementAll()}
+          {this.renderChildElement()}
         </ScrollView>
       </View>
     );

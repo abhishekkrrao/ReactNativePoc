@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
 });
 
 export default class profile extends Component {
-    state = {currentUSERUID:'',isLoading:true}
+    state = { currentUSERUID: '', isLoading: true }
     // navigation;
     constructor(props) {
         super(props)
@@ -26,13 +26,13 @@ export default class profile extends Component {
         this.readUserData();
     }
     readUserData() {
-        return new Promise(()=>{
+        return new Promise(() => {
             firebase.auth().onAuthStateChanged(user => {
                 this.getList().then((list) => {
                     this.setState({
-                        currentUSERUID:user.uid,
+                        currentUSERUID: user.uid,
                         list: list,
-                        isLoading:false
+                        isLoading: false
                     });
                 });
             });
@@ -52,12 +52,12 @@ export default class profile extends Component {
                 });
                 resolve(arrayList);
 
-                
+
             });
         });
     }
     renderRow(item) {
-        if(this.state.currentUSERUID != item.uid){
+        if (this.state.currentUSERUID != item.uid) {
             return (
                 <View style={{
                     flex: 1, flexDirection: 'row',
@@ -92,16 +92,19 @@ export default class profile extends Component {
                 </View>
             )
         }
-        
+
     }
     render() {
         // console.log('this.props.navigation ',this.props.navigation)
-        if(this.state.isLoading == true){
+        if (this.state.isLoading == true) {
             return (
-                <Loading></Loading> 
-             ) 
-        }else{
-             return (
+                <View style={styles.container}>
+                    <Headers title="User List"></Headers>
+                    <Loading></Loading>
+                </View>
+            )
+        } else {
+            return (
                 <View style={styles.container}>
                     <Headers title="User List"></Headers>
                     <FlatList
@@ -114,6 +117,6 @@ export default class profile extends Component {
                 </View>
             )
         }
-       
+
     }
 }

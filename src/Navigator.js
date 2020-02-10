@@ -9,6 +9,7 @@ import Loading from './Loading'
 import signUp from './SignUp'
 import profile from './profile'
 import Login from './Login'
+import Comment from './Screens/Comments/Comment'
 import { Image, Platform } from "react-native";
 import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -107,9 +108,11 @@ const TabNavigator = createBottomTabNavigator({
         },
     }), tabBarOptions: {
         activeTintColor: '#000',
-        inactiveTintColor: '#263238',
-        activeBackgroundColor: '#FF6F00',
-        style: { height: 60 }
+        inactiveTintColor: '#000',
+        activeBackgroundColor: '#ccc',
+        labelStyle: { fontFamily: "Montserrat-Medium", fontWeight: "900", fontSize: 14 },
+        tabStyle: { fontFamily: "Montserrat-Medium", fontWeight: "900", fontSize: 14 },
+        style: { height: 60, fontFamily: "Montserrat-Medium", borderStyle: 'solid' }
     },
 });
 const AppNavigator = createStackNavigator({
@@ -124,6 +127,7 @@ const AppNavigator = createStackNavigator({
     Home: { screen: Home },
     Modals: { screen: Modals },
     Tabs: { screen: TabNavigator },
+    Comment: { screen: Comment }
 }, {
     headerMode: 'none',
     defaultNavigationOptions: {

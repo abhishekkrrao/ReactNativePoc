@@ -179,6 +179,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-share')
     implementation project(':react-native-image-crop-picker')
     implementation 'androidx.appcompat:appcompat:1.0.0'
     androidTestImplementation 'androidx.annotation:annotation:1.0.0'
