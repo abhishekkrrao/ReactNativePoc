@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1030315320618",
+    "firebase_url": "https://pschedoproject.firebaseio.com",
+    "project_id": "pschedoproject",
+    "storage_bucket": "pschedoproject.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030315320618:android:0cb8d3dcbdec10e719aa53",
+        "android_client_info": {
+          "package_name": "com.pschedoproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1030315320618-nkprvs8pc7vl45jkprufrbsp5c2quhvf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pschedoproject",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1030315320618-d46ibgr5le7pgb9d6t6is0cke5vp5veq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDnc1Z5B0bZ9aREU5NLY3IODvRD7lBXuZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1030315320618-bj623kbpm059ab94lifbjr3figtnh2vv.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1030315320618-upbact3r9qu7iccvqd1pl74rnp95ks64.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.PschedoProject"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

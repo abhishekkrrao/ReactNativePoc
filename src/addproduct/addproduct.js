@@ -5,7 +5,7 @@ import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Headers from '../header/header'
 export default class addproduct extends React.Component {
-    state = { isLoading: false, productName: '', productDesc: '', productPic: 'https://bootdey.com/img/Content/avatar/avatar6.png', productPrice: '', productType: '', productSubType: '', isPicUpload: false }
+    state = { uid: firebase.auth().currentUser.uid, isLoading: false, productName: '', productDesc: '', productPic: 'https://bootdey.com/img/Content/avatar/avatar6.png', productPrice: '', productType: '', productSubType: '', isPicUpload: false }
     addProduct() {
         console.log('state ', this.state.productPrice);
         this.saveProduct(this.state);
@@ -45,7 +45,17 @@ export default class addproduct extends React.Component {
         const userId = firebase.auth().currentUser.uid;
         if (this.state.isPicUpload) {
             // firebase.database().ref('addProduct/' + new Date().getTime()).set(this.state).then((result) => { this.props.navigation.navigate('Home');console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
-            firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => { this.props.navigation.navigate('Home'); console.log('result', result); this.updateState(); }).catch((error) => { console.log('error', error) });
+            firebase.database().ref('addProduct/' + userId).push(this.state).then((result) => {
+                this.props.navigation.navigate('Home');
+                console.log('result ', result);
+                let olacab = `${result}`;
+                let array = [];
+                array = olacab.split('/');
+
+                this.updateState();
+            }).catch((error) => {
+                console.log('error', error);
+            });
         } else {
             alert('Please add a picture')
         }
@@ -116,7 +126,7 @@ export default class addproduct extends React.Component {
                     value={this.state.productSubType}
                 />
                 <View style={{ flex: 1, flexDirection: 'row', width: "90%", margin: 0, height: 55, padding: 0 }}>
-                    <Text style={{ flex: 1, padding: 5, height: 50,fontStyle:"900",fontFamily: "Montserrat-Medium", }}>
+                    <Text style={{ flex: 1, padding: 5, height: 50, fontStyle: "900", fontFamily: "Montserrat-Medium", }}>
                         Add Product Pic
                     </Text>
                     <TouchableHighlight style={{ flex: 1, width: 50, height: 50, alignContent: 'flex-end', justifyContent: 'flex-end' }} onPress={() => this.uploadProductPic()}>

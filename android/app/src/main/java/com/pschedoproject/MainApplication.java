@@ -8,6 +8,7 @@ import cl.json.ShareApplication;
 import com.BV.LinearGradient.LinearGradientPackage;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.dieam.reactnativepushnotification.ReactNativePushNotificationPackage;
 import cl.json.RNSharePackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.facebook.react.ReactNativeHost;

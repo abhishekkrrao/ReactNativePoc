@@ -5,6 +5,7 @@ import Loading from './Loading'
 import Headers from './header/header'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Share from 'react-native-share';
+import PushNotification from "react-native-push-notification";
 const styles = StyleSheet.create({
   MainContainer: {
     flex: 1,
@@ -49,34 +50,45 @@ export default class Home extends Component {
     this.state = { isLoading: true }
   }
 
-  parseIntoArray(value,snapshot) {
+  initPushNotification() {
+    let self = this;
+    PushNotification.configure({
+      // (optional) Called when Token is generated (iOS and Android)
+      onRegister: function (token) {
+        console.log("TOKEN:", token);
+      },
+      // (required) Called when a remote or local notification is opened or received
+      onNotification: function (notification) {
+        console.log("NOTIFICATION:", notification);
+        // process the notification
+        self._addDataToList(notification);
+        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
+        // notification.finish(PushNotificationIOS.FetchResult.NoData);
+      },
+      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
+      senderID: "1030315320618",
+      // IOS ONLY (optional): default: all - Permissions to register.
+      permissions: {
+        alert: true,
+        badge: true,
+        sound: true
+      },
+      popInitialNotification: true,
+      requestPermissions: true
+    });
+  }
+  _addDataToList(data) {
+    console.log('push notification data ', data);
+  }
+  parseIntoArray(value) {
     const br = `\n`;
     const arrayList = [];
-    let data = value;
-    let keys = Object.keys(data);
-   // keys.forEach((key) => { console.log('key ',key); });
-    snapshot.forEach((olcab) => { 
-     
-     // olcab.userid = olcab.key;
-      //console.log('olcab ',olcab.key);
-      console.log('olcab ',olcab); 
-    
-     
 
-      // Object.values(olcab).map(o1 => {
-      //   console.log('o100  ',o1); 
-
-      // });
-
-    });
     return new Promise((resolve) => {
       Object.values(value).map(o1 => {
-      
-       // console.log('>>>>>>>>  ', o1.keyExtractor());
-        Object.values(o1).map(o2 => {
-        //  console.log('>>>>>>>>  ', snapshot.key);
-         // o2.userid = key;
-         // console.log('>>>>>>>>>o2    ', o2);
+        let a = Object.keys(o1);
+        Object.values(o1).map((o2, index) => {
+          o2.key = a[index];
           arrayList.push(o2)
         });
       });
@@ -88,7 +100,7 @@ export default class Home extends Component {
     return new Promise((resolve, reject) => {
       var recentPostsRef = firebase.database().ref('addProduct/');
       recentPostsRef.once('value').then(snapshot => {
-        this.parseIntoArray(snapshot.val(),snapshot).then((list) => {
+        this.parseIntoArray(snapshot.val()).then((list) => {
           resolve(Array.from(new Set([...list])));
         }).catch((error) => {
           console.log('error ', error);
@@ -103,18 +115,19 @@ export default class Home extends Component {
 
   componentWillMount() {
     this.getList().then((list) => {
-     // console.log('list', list)
+      // console.log('list', list)
       this.setState({
         isLoading: false,
         dataSource: list
       });
     });
+    this.initPushNotification();
   }
   _refresh() {
     console.log('i am called on bottom load more button ...');
     this.state.isLoading = false;
     this.getList().then((list) => {
-     // console.log('list', list)
+      // console.log('list', list)
       this.setState({
         isLoading: false,
         dataSource: list
@@ -141,7 +154,30 @@ export default class Home extends Component {
   }
 
   likeIt(item) {
-    console.log('item>>>>>>>> ', item);
+    let path = 'addProduct/' + item.uid + '/' + item.key + '/likes/' + firebase.auth().currentUser.uid;
+    console.log('path>>>>>>>> ', path);
+
+    console.log('item.isLike ', item.likes);
+    let a = Object.values(item.likes);
+    console.log('item.aaa ', a[0]);
+    let obj = a[0];
+
+    let updates;
+    if (obj.isLike) {
+      updates = {
+        uid: firebase.auth().currentUser.uid,
+        isLike: false
+      }
+    } else {
+      updates = {
+        uid: firebase.auth().currentUser.uid,
+        isLike: true
+      }
+    }
+    firebase.database().ref(path).update(updates).then((response) => {
+      console.log('isLiked ', response);
+    });
+
   }
   render() {
     const br = `\n`;
@@ -189,7 +225,8 @@ export default class Home extends Component {
                       <Icon name="bookmark-o" size={24} color="#D84315" />
                     </View>
                     <View style={{ padding: 10 }}>
-                      <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" />
+                      {this.displayIcon(item)}
+                      {/* <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" /> */}
                     </View>
                   </View>
                 </View>
@@ -199,6 +236,17 @@ export default class Home extends Component {
           />
         </View>
       );
+    }
+  }
+  displayIcon(item) {
+    console.log('item.isLike ', item.likes);
+    let a = Object.values(item.likes);
+    console.log('item.aaa ', a[0]);
+    let obj = a[0];
+    if (obj.isLike && item.uid == obj.uid) {
+      return <Icon onPress={() => this.likeIt(item)} name="heart" size={24} color="#D84315" />
+    } else {
+      return <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" />;
     }
   }
   gotoCommentPage() {
