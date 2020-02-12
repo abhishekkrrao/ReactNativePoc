@@ -50,8 +50,6 @@ target 'PschedoProject' do
 
   pod 'RNImageCropPicker', :path => '../node_modules/react-native-image-crop-picker'
 
-  pod 'RNSvgImage', :path => '../node_modules/react-native-svg-img'
-
   pod 'RNShare', :path => '../node_modules/react-native-share'
 
   target 'PschedoProjectTests' do
