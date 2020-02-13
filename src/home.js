@@ -122,6 +122,7 @@ export default class Home extends Component {
       });
     });
     this.initPushNotification();
+    this.loadData();
   }
   _refresh() {
     console.log('i am called on bottom load more button ...');
@@ -151,6 +152,14 @@ export default class Home extends Component {
 
   closeApp() {
     this.props.navigation.goBack();
+  }
+  loadData() {
+    firebase.database().ref("addProduct/")
+      .orderByChild("uid").limitToLast(5)
+      .once("child_added").then((snapshot) => {
+        console.log('snapshot.key ', snapshot.key)
+        console.log('snapshot.key ', snapshot.val());
+      });
   }
 
   likeIt(item) {
@@ -239,9 +248,9 @@ export default class Home extends Component {
     }
   }
   displayIcon(item) {
-    console.log('item.isLike ', item.likes);
+    //console.log('item.isLike ', item.likes);
     let a = Object.values(item.likes);
-    console.log('item.aaa ', a[0]);
+   // console.log('item.aaa ', a[0]);
     let obj = a[0];
     if (obj.isLike && item.uid == obj.uid) {
       return <Icon onPress={() => this.likeIt(item)} name="heart" size={24} color="#D84315" />
