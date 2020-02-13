@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, TextInput, View, Button, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight } from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
 

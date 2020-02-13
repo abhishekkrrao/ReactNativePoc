@@ -5,16 +5,13 @@ import {
   Text,
   View,
   Image,
-  ScrollView,
-  FlatList
-} from 'react-native';
+  ScrollView} from 'react-native';
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
-import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Dialog from "react-native-dialog";
-import Loading from './Loading'
+import Loading from '../../loader/Loading'
 export default class Modals extends Component {
   state = {
     email: '',
@@ -146,7 +143,6 @@ export default class Modals extends Component {
     this.getCurrentUser();
   }
   getCurrentUser() {
-    let list = [];
     let user = firebase.auth().currentUser;
     //console.log('useruser>> ', user.email);
     this.setState({
@@ -218,7 +214,7 @@ export default class Modals extends Component {
             snapToInterval={150} //your element width
             snapToAlignment={"center"}
             scrollEnabled={true}>{
-              this.state.list.map((item, index) => {
+              this.state.list.map((item) => {
                 return this.renderRow(item)
               })
             }
@@ -239,7 +235,7 @@ export default class Modals extends Component {
             snapToInterval={150} //your element width
             snapToAlignment={"center"}
             scrollEnabled={true}>{
-              this.state.list.map((item, index) => {
+              this.state.list.map((item) => {
                 return this.renderRow(item)
               })
             }
@@ -315,7 +311,7 @@ export default class Modals extends Component {
                 <TouchableHighlight onPress={() => this.closeApp()}>
                   <Image
                     style={{ width: 25, height: 25 }}
-                    source={require('./assets/logout.png')}
+                    source={require('../.././assets/logout.png')}
                   />
                 </TouchableHighlight>
               </View>

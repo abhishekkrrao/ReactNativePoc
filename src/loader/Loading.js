@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, Text, Button, View, ActivityIndicator } from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',

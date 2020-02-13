@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { View } from "react-native";
-import Loading from '../../Loading'
+import Loading from '../../loader/Loading'
 import commentcss from './Style'
 import Headers from '../../header/header'
 export default class Comment extends Component {

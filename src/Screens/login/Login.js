@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button, TouchableHighlight, ImageBackground } from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight } from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
 export default class Login extends React.Component {
@@ -19,7 +19,7 @@ export default class Login extends React.Component {
         .catch(error => this.setState({ errorMessage: error.message }))
     }
   }
-  static navigationOptions = ({ navigation }) => {
+  static navigationOptions = () => {
     return {
       header: (
         <View
@@ -49,7 +49,6 @@ export default class Login extends React.Component {
   }
 
   render() {
-    const { navigate } = this.props.navigation;
     return (
 
       <View style={styles.container}>

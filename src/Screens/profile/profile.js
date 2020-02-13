@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { StyleSheet, View, FlatList, TouchableHighlight, Text, Image } from "react-native";
 import { Icon } from 'react-native-elements'
 import firebase from 'react-native-firebase'
-import Loading from './Loading'
-import Headers from './header/header'
+import Loading from '../../loader/Loading'
+import Headers from '../../header/header'
 const styles = StyleSheet.create({
     container: {
         flex: 1,

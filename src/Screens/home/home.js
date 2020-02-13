@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight } from "react-native";
 import firebase from 'react-native-firebase'
-import Loading from './Loading'
-import Headers from './header/header'
+import Loading from '../../loader/Loading'
+import Headers from '../../header/header'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Share from 'react-native-share';
 import PushNotification from "react-native-push-notification";

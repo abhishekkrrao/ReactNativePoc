@@ -1,15 +1,14 @@
 import React, { Component } from "react";
-import Home from './home'
-import App from './../App'
-import Details from './details/details'
-import addproduct from './addproduct/addproduct'
-import Chats from './chat/chat'
-import Modals from './modal'
-import Loading from './Loading'
-import signUp from './SignUp'
-import profile from './profile'
-import Login from './Login'
-import Comment from './Screens/Comments/Comment'
+import Home from '../Screens/home/home'
+import Details from '../details/details'
+import addproduct from '../addproduct/addproduct'
+import Chats from '../chat/chat'
+import Modals from '../Screens/modal/modal'
+import Loading from '../loader/Loading'
+import signUp from '../Screens/signup/SignUp'
+import profile from '../Screens/profile/profile'
+import Login from '../Screens/login/Login'
+import Comment from '../Screens/Comments/Comment'
 import { Image, Platform } from "react-native";
 import { createAppContainer, StackActions, NavigationActions } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -83,25 +82,25 @@ const TabNavigator = createBottomTabNavigator({
                 case 'Home':
                     return (
                         <Image
-                            source={require('./assets/home.png')}
+                            source={require('../assets/home.png')}
                             style={{ width: 20, height: 20 }} />
                     );
                 case 'Modals':
                     return (
                         <Image
-                            source={require('./assets/settings.png')}
+                            source={require('../assets/settings.png')}
                             style={{ width: 20, height: 20 }} />
                     );
                 case 'addproduct':
                     return (
                         <Image
-                            source={require('./assets/contacts.png')}
+                            source={require('../assets/contacts.png')}
                             style={{ width: 20, height: 20 }} />
                     );
                 case 'profile':
                     return (
                         <Image
-                            source={require('./assets/contacts.png')}
+                            source={require('../assets/contacts.png')}
                             style={{ width: 20, height: 20 }} />
                     );
             }
@@ -117,7 +116,6 @@ const TabNavigator = createBottomTabNavigator({
 });
 const AppNavigator = createStackNavigator({
     Loading: { screen: Loading },
-    App: { screen: App },
     Details: { screen: Details },
     Chats: { screen: Chats },
     signUp: { screen: signUp },
