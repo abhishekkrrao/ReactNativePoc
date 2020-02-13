@@ -1,49 +1,12 @@
 import React, { Component } from "react";
-import { StyleSheet, View, Text, FlatList, Image, TouchableHighlight } from "react-native";
+import { View, Text, FlatList, Image, TouchableHighlight } from "react-native";
 import firebase from 'react-native-firebase'
 import Loading from '../../loader/Loading'
 import Headers from '../../header/header'
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Share from 'react-native-share';
 import PushNotification from "react-native-push-notification";
-const styles = StyleSheet.create({
-  MainContainer: {
-    flex: 1,
-    margin: 0
-  },
-  imageView: {
-    width: 'auto',
-    height: 'auto',
-    flex: 1
-  },
-  imageViews: {
-    width: '100%',
-    height: 350,
-    flex: 1,
-    padding: 0,
-    margin: 0
-  },
-  textView: {
-    width: '100%',
-    textAlignVertical: 'center',
-    padding: 10,
-    color: '#000',
-    flex: 1,
-    fontFamily: "Montserrat-Medium",
-    fontWeight: '900',
-    fontSize: 14
-  },
-  textViews: {
-    width: '50%',
-    textAlignVertical: 'center',
-    padding: 10,
-    color: '#000',
-    fontSize: 9,
-    fontFamily: "Montserrat-Medium",
-    fontWeight: '500'
-  },
-  custom_view: { flex: 1, backgroundColor: '#ffffff', margin: 5, padding: 0, borderRadius: 7, }
-});
+import styles from './style'
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -81,7 +44,6 @@ export default class Home extends Component {
     console.log('push notification data ', data);
   }
   parseIntoArray(value) {
-    const br = `\n`;
     const arrayList = [];
 
     return new Promise((resolve) => {

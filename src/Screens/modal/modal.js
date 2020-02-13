@@ -5,13 +5,15 @@ import {
   Text,
   View,
   Image,
-  ScrollView} from 'react-native';
+  ScrollView
+} from 'react-native';
 import { Header } from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Dialog from "react-native-dialog";
 import Loading from '../../loader/Loading'
+import styles from './style'
 export default class Modals extends Component {
   state = {
     email: '',
@@ -20,7 +22,6 @@ export default class Modals extends Component {
     isLoading: false,
     list: []
   }
-
   showLoading() {
     if (this.state.isLoading == true) {
       return (
@@ -28,8 +29,6 @@ export default class Modals extends Component {
       )
     }
   }
-
-
   openAlert() {
     return (
       <Dialog.Container>
@@ -42,7 +41,6 @@ export default class Modals extends Component {
       </Dialog.Container>
     );
   }
-
   getImageFromCamera() {
     return new Promise((resolve) => {
       ImagePicker.openCamera({
@@ -103,7 +101,6 @@ export default class Modals extends Component {
       profilePic,
     });
   }
-
   uploadProfilePic() {
     return new Promise(() => {
       this.pickImage().then(() => {
@@ -125,7 +122,6 @@ export default class Modals extends Component {
       });
     })
   }
-
   uploadImage() {
     try {
       this.setState({
@@ -150,14 +146,11 @@ export default class Modals extends Component {
       uid: user.uid,
       isLoading: true
     });
-
     this.getUserDetails().then((profilePic) => {
       console.log('snapshotprofilePic>> ', profilePic);
     }).catch((error) => {
       console.log('error>>> ', error);
     });
-
-
     this.getUserProductList().then((list) => {
       this.setState({
         list: list
@@ -165,9 +158,7 @@ export default class Modals extends Component {
     }).catch((error) => {
       console.log('error>>> ', error);
     });
-
   }
-
   getUserDetails() {
     return new Promise((resolve, reject) => {
       let path = 'Users/' + firebase.auth().currentUser.uid;
@@ -185,7 +176,6 @@ export default class Modals extends Component {
       });
     })
   }
-
   getUserProductList() {
     let list = [];
     return new Promise((resolve, reject) => {
@@ -197,11 +187,9 @@ export default class Modals extends Component {
       }).catch((error) => { reject(error) });
     });
   }
-
   closeApp() {
     firebase.auth().signOut();
   }
-
   renderChildElement() {
     if (this.state.list.length > 0) {
       return (
@@ -242,10 +230,10 @@ export default class Modals extends Component {
           </ScrollView>
         </View>
       )
-    } 
+    }
   }
-  openPage(item){
-    console.log('modalpage_item ',item);
+  openPage(item) {
+    console.log('modalpage_item ', item);
 
   }
   renderRow(item) {
@@ -282,14 +270,10 @@ export default class Modals extends Component {
             end: { x: 1, y: 0.5 },
           }}
         />
-
         <ScrollView
           style={{ flex: 1, width: '100%' }}
           horizontal={false}
         >
-
-
-
           <View style={styles.header}>
             <View style={styles.headerContent}>
               <TouchableHighlight onPress={() => this.uploadImage()} style={styles.avatar1} >
@@ -325,74 +309,5 @@ export default class Modals extends Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1
-  },
-  header: {
-    backgroundColor: "#DCDCDC",
-  },
-  headerContent: {
-    padding: 30,
-    alignItems: 'center',
-  },
-  avatar1: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-  },
-  avatar: {
-    width: 130,
-    height: 130,
-    borderRadius: 63,
-    padding: 5
-  },
-  name: {
-    fontSize: 22,
-    color: "#000000",
-    fontWeight: '600',
-    fontFamily: "Montserrat-Medium"
-  },
-  userInfo: {
-    fontSize: 16,
-    color: "#778899",
-    fontWeight: '600',
-    fontFamily: "Montserrat-Medium"
-  },
-  body: {
-    backgroundColor: "#778899",
-    height: 50,
-    alignItems: 'center',
-    fontFamily: "Montserrat-Medium"
-  },
-  item: {
-    flexDirection: 'row',
-  },
-  infoContent: {
-    flex: 1,
-    alignItems: 'flex-start',
-    paddingLeft: 5,
-    fontFamily: "Montserrat-Medium"
-  },
-  iconContent: {
-    flex: 1,
-    alignItems: 'flex-end',
-    paddingRight: 5,
-    fontFamily: "Montserrat-Medium",
-    justifyContent: 'center',
-    textAlignVertical: 'center',
-    textAlign: 'center'
-  },
-  icon: {
-    width: 30,
-    height: 30,
-    marginTop: 20,
-  },
-  info: {
-    fontSize: 18,
-    marginTop: 20,
-    color: "#FFFFFF",
-  }
-});
 
 
