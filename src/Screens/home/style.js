@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-const styles = StyleSheet.create({
+export default {
     MainContainer: {
       flex: 1,
       margin: 0
@@ -36,4 +36,4 @@ const styles = StyleSheet.create({
       fontWeight: '500'
     },
     custom_view: { flex: 1, backgroundColor: '#ffffff', margin: 5, padding: 0, borderRadius: 7, }
-  });
+  };
