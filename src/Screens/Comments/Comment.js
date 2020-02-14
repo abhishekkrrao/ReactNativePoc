@@ -1,45 +1,45 @@
 import React, { Component } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Button, TouchableHighlight } from "react-native";
 import Loading from '../../loader/Loading'
-import commentcss from './Style'
+import styles from './Style'
 import Headers from '../../header/header'
-import { addComment, olacab } from '../../Api/ApiHandler.js'
-
-console.log(addComment, "----111111");
-
-console.log(olacab, "----olacab");
+import firebase from 'react-native-firebase'
 export default class Comment extends Component {
     constructor(props) {
         super(props)
         this.state = { isLoading: false, receivedValue: {} }
     }
     componentWillMount() {
-        // const receivedValue = this.props.navigation.getParam('item', () => { });
-        // console.log('receivedValue ', receivedValue);
-        // this.setState({
-        //     receivedValue:receivedValue
-        // });
-        console.log('------2222222')
-        debugger;
-
+        const receivedValue = this.props.navigation.getParam('item', () => { });
+        console.log('receivedValue ', receivedValue);
+        this.setState({
+            receivedValue: receivedValue
+        });
     }
 
-    // addComment(item,message){
-    //     let path = "addProduct/"+item.uid+"/"+item.key+"comment";
-    //     let user = firebase.auth().currentUser;
-    //     let obj = {
-    //         message:message,
-    //         uid:user.uid,
-    //         email:user.email,
-    //         pic:user.profilePic,
-    //         timestamp:new Date()
-    //     }
-    //     firebase.database().ref(path).push(obj).then((saveMessage) => {
-    //         console.log('saveMessage ', saveMessage);
-    //     }).catch((error)=>{
-    //         console.log('error ', error);
-    //     });
-    // }
+    doComment(item, message) {
+        let path = "addProduct/" + item.uid + "/" + item.key + "/comment";
+
+        console.log('item.path ', path);
+        let user = firebase.auth().currentUser;
+        let obj = {
+            message: message,
+            uid: user.uid,
+            email: user.email,
+            pic: user.profilePic,
+            timestamp: new Date()
+        }
+        if (item.uid != null && item.uid != undefined && item.key != null && item.key != undefined) {
+            firebase.database().ref(path).push(obj).then((saveMessage) => {
+                console.log('saveMessage ', saveMessage);
+            }).catch((error) => {
+                console.log('error ', error);
+            });
+        } else {
+            console.log('item.uid ', item.uid);
+            console.log('item.key ', item.key);
+        }
+    }
     render() {
         setTimeout(() => { this.state.isLoading = false }, 5000);
         if (this.state.isLoading == true) {
@@ -48,12 +48,16 @@ export default class Comment extends Component {
             )
         } else {
             return (
-                <View style={commentcss.MainContainer}>
+                <View style={styles.MainContainer}>
                     <Headers title="Comments"></Headers>
-                    <View>
-                        <Text>
-                            {this.state.receivedValue.productPic}
+                    <View style={styles.sub_main_container}>
+                        <Text style={styles.text_c_view}>
+                            Hi this is dummy page .i am still working on it .
                         </Text>
+
+                        <TouchableHighlight style={ styles.touch_v }>
+                            <Button color="#000" title="Comment" onClick={this.doComment(this.state.receivedValue, "dfgdsf")} ></Button>
+                        </TouchableHighlight>
                     </View>
                 </View>
             );

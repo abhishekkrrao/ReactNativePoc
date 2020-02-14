@@ -71,7 +71,7 @@ export default class Home extends Component {
         dataSource: list
       });
     });
-    this.initPushNotification();
+   this.initPushNotification();
     this.loadData();
   }
   _refresh() {
