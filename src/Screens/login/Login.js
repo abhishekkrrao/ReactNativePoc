@@ -3,14 +3,19 @@ import { Text, TextInput, View, Button, TouchableHighlight } from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
 export default class Login extends React.Component {
-  state = { email: '', password: '', errorMessage: null }
+
+  constructor(props) {
+    super(props)
+    this.state = { email: '', password: '', errorMessage: null }
+  }
+
   handleLogin = () => {
     // TODO: Firebase stuff...
     const { email, password } = this.state;
     const emailError = this.validateEmail(this.state.email)
     const passwordError = this.state.password
     if (!emailError && !passwordError) {
-      alert('Details are not valid!')
+      this.setState({ errorMessage: 'Details are not valid!' });
     } else {
       firebase
         .auth()
@@ -19,29 +24,7 @@ export default class Login extends React.Component {
         .catch(error => this.setState({ errorMessage: error.message }))
     }
   }
-  static navigationOptions = () => {
-    return {
-      header: (
-        <View
-          style={{
-            height: 45,
-            marginTop: 20,
-            backgroundColor: 'red',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            This is Custom Header
-          </Text>
-        </View>
-      ),
-    };
-  };
+
 
   validateEmail = (email) => {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -61,10 +44,15 @@ export default class Login extends React.Component {
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Email"
+          returnKeyType={"next"}
+          onSubmitEditing={() => { this.Password.focus(); }}
+          blurOnSubmit={false}
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
         />
         <TextInput
+          ref={(input) => { this.Password = input; }}
+          mode='outlined'
           secureTextEntry
           style={styles.textInput}
           autoCapitalize="none"
