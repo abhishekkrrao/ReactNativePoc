@@ -173,7 +173,7 @@ export default class Home extends Component {
                   </View>
                   <View style={{ flex: 2, flexDirection: 'row' }}>
                     <View style={{ padding: 10 }}>
-                      <Icon onPress={() => this.props.navigation.navigate('Comment')} name="comment-o" size={24} color="#D84315" />
+                      <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#D84315" />
                     </View>
                     <View style={{ padding: 10 }}>
                       <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#D84315" />
@@ -198,7 +198,7 @@ export default class Home extends Component {
   displayIcon(item) {
     //console.log('item.isLike ', item.likes);
     let a = Object.values(item.likes);
-   // console.log('item.aaa ', a[0]);
+    // console.log('item.aaa ', a[0]);
     let obj = a[0];
     if (obj.isLike && item.uid == obj.uid) {
       return <Icon onPress={() => this.likeIt(item)} name="heart" size={24} color="#D84315" />
@@ -206,7 +206,7 @@ export default class Home extends Component {
       return <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" />;
     }
   }
-  gotoCommentPage() {
-
+  gotoCommentPage(item) {
+    this.props.navigation.navigate('Comment', { item: item })
   }
 }

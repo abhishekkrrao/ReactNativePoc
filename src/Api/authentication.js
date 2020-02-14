@@ -1,5 +1,4 @@
 import firebase from 'react-native-firebase'
-
 export default class authentication extends React {
     handleLogin = (email, password) => {
         const emailError = this.validateEmail(email)
