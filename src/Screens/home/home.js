@@ -156,14 +156,14 @@ export default class Home extends Component {
     if (this.state.isLoading == true) {
       return (
         <View style={styles.MainContainer}>
-          <Headers title="Home"></Headers>
+          <Headers title="Depop"></Headers>
           <Loading></Loading>
         </View>
       )
     } else {
       return (
         <View style={styles.MainContainer}>
-          <Headers title="Home"></Headers>
+          <Headers title="Depop"></Headers>
           <FlatList
             data={this.state.dataSource}
             ItemSeparatorComponent={this.FlatListItemSeparator}

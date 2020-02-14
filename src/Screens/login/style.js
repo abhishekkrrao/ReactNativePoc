@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 export default {
   container: {
     flex: 1,
@@ -8,22 +8,23 @@ export default {
   },
   textInput: {
     height: 60,
-    fontSize:20,
+    fontSize: 20,
     width: '90%',
     borderColor: '#9b9b9b',
     borderBottomWidth: 1,
     marginTop: 8,
     marginVertical: 15,
     fontFamily: "Montserrat-Medium",
-    borderBottomWidth:2,
-    borderColor:'#ccc',
+    borderRadius: 5,
+    borderWidth: 2,
+    paddingLeft: 15
   },
-  buttonCss:{
-    width:150,
-    backgroundColor:'#000',
-    height:45,
-    color:'#000',
-    borderRadius:10,
+  buttonCss: {
+    width: 200,
+    backgroundColor: '#000',
+    height: 45,
+    color: '#000',
+    borderRadius: 0,
     justifyContent: 'center',
     alignItems: 'center',
     fontFamily: "Montserrat-Medium",

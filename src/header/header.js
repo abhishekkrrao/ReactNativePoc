@@ -13,7 +13,11 @@ export default class Headers extends Component {
             <Header
                 containerStyle={{ height: 55 }}
                 ViewComponent={LinearGradient} // Don't forget this!
-                centerComponent={{ text: this.props.title, style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 25 } }}
+                centerComponent={{
+                    text: this.props.title, style:
+                        { color: '#fff', fontFamily: "boldme", paddingBottom: 25, fontSize: 28, fontWeight: "900" }
+                }
+                }
                 // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
                 linearGradientProps={{
                     colors: ['#898989', '#898989'],
