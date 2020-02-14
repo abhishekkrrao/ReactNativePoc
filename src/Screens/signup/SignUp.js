@@ -14,7 +14,7 @@ export default class signUp extends Component {
         const emailError = this.validateEmail(this.state.email)
         const passwordError = this.state.password
         if (!emailError && !passwordError) {
-            this.setState({ errorMessage: 'Details are not valid!', isLoading: false })
+            this.setState({ errorMessage: "Details are not valid !" })
         } else {
             firebase
                 .auth()
@@ -73,8 +73,12 @@ export default class signUp extends Component {
                     onSubmitEditing={() => { this.Password.focus(); }}
                     onChangeText={email => this.setState({ email })}
                     value={this.state.email}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => { this.Password.focus(); }}
+                    blurOnSubmit={false}
                 />
                 <TextInput
+                    ref={(input) => { this.Password = input; }}
                     secureTextEntry
                     placeholder="Password"
                     autoCapitalize="none"

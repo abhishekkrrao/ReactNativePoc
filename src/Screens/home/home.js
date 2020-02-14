@@ -12,25 +12,14 @@ export default class Home extends Component {
     super(props)
     this.state = { isLoading: true }
   }
-
   initPushNotification() {
     let self = this;
     PushNotification.configure({
-      // (optional) Called when Token is generated (iOS and Android)
-      onRegister: function (token) {
-        console.log("TOKEN:", token);
-      },
-      // (required) Called when a remote or local notification is opened or received
-      onNotification: function (notification) {
-        console.log("NOTIFICATION:", notification);
-        // process the notification
+      onRegister: function () {
+      }, onNotification: function (notification) {
         self._addDataToList(notification);
-        // required on iOS only (see fetchCompletionHandler docs: https://github.com/react-native-community/react-native-push-notification-ios)
-        // notification.finish(PushNotificationIOS.FetchResult.NoData);
       },
-      // ANDROID ONLY: GCM or FCM Sender ID (product_number) (optional - not required for local notifications, but is need to receive remote push notifications)
       senderID: "1030315320618",
-      // IOS ONLY (optional): default: all - Permissions to register.
       permissions: {
         alert: true,
         badge: true,
@@ -45,7 +34,6 @@ export default class Home extends Component {
   }
   parseIntoArray(value) {
     const arrayList = [];
-
     return new Promise((resolve) => {
       Object.values(value).map(o1 => {
         let a = Object.keys(o1);
@@ -127,12 +115,10 @@ export default class Home extends Component {
   likeIt(item) {
     let path = 'addProduct/' + item.uid + '/' + item.key + '/likes/' + firebase.auth().currentUser.uid;
     console.log('path>>>>>>>> ', path);
-
     console.log('item.isLike ', item.likes);
     let a = Object.values(item.likes);
     console.log('item.aaa ', a[0]);
     let obj = a[0];
-
     let updates;
     if (obj.isLike) {
       updates = {
@@ -187,7 +173,7 @@ export default class Home extends Component {
                   </View>
                   <View style={{ flex: 2, flexDirection: 'row' }}>
                     <View style={{ padding: 10 }}>
-                      <Icon onPress={() => this.props.navigation.navigate('Comment')} name="comment-o" size={24} color="#D84315" />
+                      <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#D84315" />
                     </View>
                     <View style={{ padding: 10 }}>
                       <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#D84315" />
@@ -212,7 +198,7 @@ export default class Home extends Component {
   displayIcon(item) {
     //console.log('item.isLike ', item.likes);
     let a = Object.values(item.likes);
-   // console.log('item.aaa ', a[0]);
+    // console.log('item.aaa ', a[0]);
     let obj = a[0];
     if (obj.isLike && item.uid == obj.uid) {
       return <Icon onPress={() => this.likeIt(item)} name="heart" size={24} color="#D84315" />
@@ -220,7 +206,7 @@ export default class Home extends Component {
       return <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" />;
     }
   }
-  gotoCommentPage() {
-
+  gotoCommentPage(item) {
+    this.props.navigation.navigate('Comment', { item: item })
   }
 }

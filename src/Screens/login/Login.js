@@ -1,54 +1,49 @@
 import React from 'react'
-import { Text, TextInput, View, Button, TouchableHighlight } from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight ,Keyboard} from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
 import Loading from '../../loader/Loading'
-import { fromLeft, zoomIn, zoomOut, flipX } from 'react-navigation-transitions'
 export default class Login extends React.Component {
-  state = { email: '', password: '', errorMessage: null, isLoading: false }
+
+  constructor(props) {
+    super(props)
+    this.state = { email: '', password: '', errorMessage: null, isLoading: false }
+  }
+
   handleLogin = () => {
-    this.state.isLoading = true;
+    // TODO: Firebase stuff...
+    Keyboard.dismiss()
+    this.setState({
+      isLoading: true
+    })
     const { email, password } = this.state;
     const emailError = this.validateEmail(this.state.email)
     const passwordError = this.state.password
     if (!emailError && !passwordError) {
-      this.setState({ errorMessage: 'Details are not valid!', isLoading: false })
+      this.setState({ errorMessage: 'Details are not valid!' });
+      this.setState({
+        isLoading: false
+      })
     } else {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
         .then(() => {
+          this.props.navigation.navigate('Home');
           this.setState({
             isLoading: false
           })
-          this.props.navigation.navigate('Home');
         })
-        .catch(error => this.setState({ errorMessage: error.message, isLoading: false }))
+        .catch(error => {
+          this.setState({ errorMessage: error.message })
+          this.setState({
+            isLoading: false
+          })
+        }
+      )
     }
   }
-  static navigationOptions = () => {
-    return {
-      header: (
-        <View
-          style={{
-            height: 45,
-            marginTop: 20,
-            backgroundColor: 'red',
-            justifyContent: 'center',
-          }}>
-          <Text
-            style={{
-              color: 'white',
-              textAlign: 'center',
-              fontWeight: 'bold',
-              fontSize: 18,
-            }}>
-            This is Custom Header
-          </Text>
-        </View>
-      ),
-    };
-  };
+
 
   showLoading() {
     if (this.state.isLoading) {
@@ -62,9 +57,17 @@ export default class Login extends React.Component {
     return re.test(email);
   }
 
-  render() {
-    return (
+  loader() {
+    if (this.state.isLoading == true) {
+      return (
+        <Loading></Loading>
+      )
+    }
+  }
 
+  render() {
+
+    return (
       <View style={styles.container}>
         <Text style={{ color: '#000', fontSize: 40, fontFamily: "Montserrat-Medium" }}>Log In</Text>
         {this.state.errorMessage &&
@@ -77,6 +80,7 @@ export default class Login extends React.Component {
           placeholder="Email"
           returnKeyType={"next"}
           onSubmitEditing={() => { this.Password.focus(); }}
+          blurOnSubmit={false}
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
         />
@@ -84,18 +88,20 @@ export default class Login extends React.Component {
 
 
         <TextInput
+          ref={(input) => { this.Password = input; }}
+          mode='outlined'
           secureTextEntry
+          maxLength={8}
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Password"
-          ref={(input) => { this.Password = input; }}
-          onChangeText={password => this.setState({ password })}
+          onChangeText={password => this.onPasswordChange(password)}
           value={this.state.password}
         />
-        {this.showLoading()}
+        {this.loader()}
 
-        <TouchableHighlight style={{ backgroundColor: '#000', width: 200, borderRadius: 0, padding: 5, alignSelf: 'center' }}>
-          <Button style={styles.buttonCss} color='#000' title="Login" onPress={() => this.handleLogin()} />
+        <TouchableHighlight style={{ backgroundColor: '#000', width: 150, borderRadius: 15, padding: 5, alignSelf: 'center' }}>
+          <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Login" onPress={() => this.handleLogin()} />
         </TouchableHighlight>
 
         <View style={{ marginTop: 25 }}>
@@ -105,8 +111,7 @@ export default class Login extends React.Component {
 
     )
   }
-  goSignUpPage(){
-    this.props.navigation.navigate('signUp');
-    fromLeft(3000);
+  onPasswordChange(password) {
+    this.setState({ password })
   }
 }
