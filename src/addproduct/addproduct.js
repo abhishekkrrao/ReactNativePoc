@@ -1,14 +1,22 @@
 import React from 'react'
 import { Text, TextInput, View, Button, TouchableHighlight, Image } from 'react-native'
-import addproductcss from './addproductcss'
+import styles from './addproductcss'
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Headers from '../header/header'
+import Loading from '../loader/Loading'
 export default class addproduct extends React.Component {
     state = { uid: firebase.auth().currentUser.uid, isLoading: false, productName: '', productDesc: '', productPic: 'https://bootdey.com/img/Content/avatar/avatar6.png', productPrice: '', productType: '', productSubType: '', isPicUpload: false }
     addProduct() {
         console.log('state ', this.state.productPrice);
         this.saveProduct(this.state);
+    }
+    showLoading() {
+        if (this.state.isPicUpload) {
+            return (
+                <Loading></Loading>
+            )
+        }
     }
     updateState() {
         this.state.productDesc = ''
@@ -57,7 +65,7 @@ export default class addproduct extends React.Component {
                 console.log('error', error);
             });
         } else {
-            alert('Please add a picture')
+            //alert('Please add a picture')
         }
     }
     uploadProductPic() {
@@ -87,24 +95,31 @@ export default class addproduct extends React.Component {
     }
     render() {
         return (
-            <View style={addproductcss.container}>
+            <View style={styles.container}>
                 <Headers title="Add Product"></Headers>
+
                 <TextInput
-                    style={addproductcss.textInput}
+                    style={styles.textInput}
                     autoCapitalize="none"
                     placeholder="Product Name"
                     onChangeText={productName => this.setState({ productName })}
                     value={this.state.productName}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => { this.productDesc.focus(); }}
                 />
                 <TextInput
-                    style={addproductcss.textInput}
+                    ref={(input) => { this.productDesc = input; }}
+                    returnKeyType={"next"}
+                    onSubmitEditing={() => { this.productPrice.focus(); }}
+                    style={styles.textInput}
                     autoCapitalize="none"
                     placeholder="Product Desc"
                     onChangeText={productDesc => this.setState({ productDesc })}
                     value={this.state.productDesc}
                 />
                 <TextInput
-                    style={addproductcss.textInput}
+                    ref={(input) => { this.productPrice = input; }}
+                    style={styles.textInput}
                     autoCapitalize="none"
                     placeholder="Product Price"
                     autoCompleteType='tel'
@@ -112,32 +127,34 @@ export default class addproduct extends React.Component {
                     value={this.state.productPrice}
                 />
                 <TextInput
-                    style={addproductcss.textInput}
+                    style={styles.textInput}
                     autoCapitalize="none"
                     placeholder="Product Type"
                     onChangeText={productType => this.setState({ productType })}
                     value={this.state.productType}
                 />
+                {this.showLoading()}
                 <TextInput
-                    style={addproductcss.textInput}
+                    style={styles.textInput}
                     autoCapitalize="none"
                     placeholder="Product Sub-Type"
                     onChangeText={productSubType => this.setState({ productSubType })}
                     value={this.state.productSubType}
                 />
-                <View style={{ flex: 1, flexDirection: 'row', width: "90%", margin: 0, height: 55, padding: 0 }}>
-                    <Text style={{ flex: 1, padding: 5, height: 50, fontStyle: "900", fontFamily: "Montserrat-Medium", }}>
+                <View style={styles.text_View}>
+                    <Text style={styles.t1}>
                         Add Product Pic
                     </Text>
-                    <TouchableHighlight style={{ flex: 1, width: 50, height: 50, alignContent: 'flex-end', justifyContent: 'flex-end' }} onPress={() => this.uploadProductPic()}>
-                        <Image style={{ flex: 1, padding: 5, width: 50, height: 50, alignContent: 'flex-end', alignSelf: 'flex-end' }} source={{ uri: this.state.productPic }} />
+                    <TouchableHighlight style={styles.touch_v1} onPress={() => this.uploadProductPic()}>
+                        <Image style={styles.image_v1} source={{ uri: this.state.productPic }} />
                     </TouchableHighlight>
                 </View>
-                <View style={{ flex: 1, margin: 0, height: 55, padding: 0, alignSelf: 'flex-end', marginEnd: 15 }}>
-                    <TouchableHighlight style={{ backgroundColor: '#000', borderRadius: 15, padding: 5, alignSelf: 'flex-end' }}>
-                        <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Add Product" onPress={() => this.saveProduct()} />
+                <View style={{ flex: 1, margin: 0, height: 55, padding: 0, alignSelf: 'center', marginEnd: 15 }}>
+                    <TouchableHighlight style={styles.image_v2}>
+                        <Button style={styles.button_v1} color='#000' title="Add Product" onPress={() => this.saveProduct()} />
                     </TouchableHighlight>
                 </View>
+
             </View>
         )
     }

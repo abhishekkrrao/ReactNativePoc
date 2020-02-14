@@ -11,12 +11,12 @@ export default {
     fontSize: 20,
     width: '90%',
     borderColor: '#9b9b9b',
+    borderRadius: 5,
+    borderWidth: 2,
     borderBottomWidth: 1,
     marginTop: 8,
     marginVertical: 15,
     fontFamily: "Montserrat-Medium",
-    borderRadius: 5,
-    borderWidth: 2,
     paddingLeft: 15
   },
   buttonCss: {
