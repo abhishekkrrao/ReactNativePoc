@@ -1,27 +1,46 @@
 import React from 'react'
-import { Text, TextInput, View, Button, TouchableHighlight } from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight ,Keyboard} from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
+import Loading from '../../loader/Loading'
 export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = { email: '', password: '', errorMessage: null }
+    this.state = { email: '', password: '', errorMessage: null, isLoading: false }
   }
 
   handleLogin = () => {
     // TODO: Firebase stuff...
+    Keyboard.dismiss()
+    this.setState({
+      isLoading: true
+    })
     const { email, password } = this.state;
     const emailError = this.validateEmail(this.state.email)
     const passwordError = this.state.password
     if (!emailError && !passwordError) {
       this.setState({ errorMessage: 'Details are not valid!' });
+      this.setState({
+        isLoading: false
+      })
     } else {
       firebase
         .auth()
         .signInWithEmailAndPassword(email, password)
-        .then(() => this.props.navigation.navigate('Home'))
-        .catch(error => this.setState({ errorMessage: error.message }))
+        .then(() => {
+          this.props.navigation.navigate('Home');
+          this.setState({
+            isLoading: false
+          })
+        })
+        .catch(error => {
+          this.setState({ errorMessage: error.message })
+          this.setState({
+            isLoading: false
+          })
+        }
+      )
     }
   }
 
@@ -31,9 +50,17 @@ export default class Login extends React.Component {
     return re.test(email);
   }
 
-  render() {
-    return (
+  loader() {
+    if (this.state.isLoading == true) {
+      return (
+        <Loading></Loading>
+      )
+    }
+  }
 
+  render() {
+
+    return (
       <View style={styles.container}>
         <Text style={{ color: '#FF7538', fontSize: 40, fontFamily: "Montserrat-Medium" }}>Log In</Text>
         {this.state.errorMessage &&
@@ -54,13 +81,14 @@ export default class Login extends React.Component {
           ref={(input) => { this.Password = input; }}
           mode='outlined'
           secureTextEntry
+          maxLength={8}
           style={styles.textInput}
           autoCapitalize="none"
           placeholder="Password"
-          onChangeText={password => this.setState({ password })}
+          onChangeText={password => this.onPasswordChange(password)}
           value={this.state.password}
         />
-
+        {this.loader()}
 
         <TouchableHighlight style={{ backgroundColor: '#000', width: 150, borderRadius: 15, padding: 5, alignSelf: 'center' }}>
           <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Login" onPress={() => this.handleLogin()} />
@@ -72,5 +100,8 @@ export default class Login extends React.Component {
       </View>
 
     )
+  }
+  onPasswordChange(password) {
+    this.setState({ password })
   }
 }

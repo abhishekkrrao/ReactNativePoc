@@ -7,7 +7,7 @@ export default {
     backgroundColor: "#fff"
   },
   textInput: {
-    height: 60,
+    height: 50,
     fontSize:20,
     width: '90%',
     borderColor: '#9b9b9b',
