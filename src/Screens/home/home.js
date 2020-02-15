@@ -7,10 +7,27 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Share from 'react-native-share';
 import PushNotification from "react-native-push-notification";
 import styles from './style'
+// import auth from '../../Api/authentication'
 export default class Home extends Component {
   constructor(props) {
     super(props)
     this.state = { isLoading: true }
+  }
+  componentWillMount() {
+    // console.log('auth  ', auth);
+    // auth.getData('userdata').then((obj) => {
+    //   console.log('userdata  ', obj);
+    // });
+
+    this.getList().then((list) => {
+      // console.log('list', list)
+      this.setState({
+        isLoading: false,
+        dataSource: list
+      });
+    });
+    this.initPushNotification();
+    this.loadData();
   }
   initPushNotification() {
     let self = this;
@@ -63,17 +80,7 @@ export default class Home extends Component {
     });
   }
 
-  componentWillMount() {
-    this.getList().then((list) => {
-      // console.log('list', list)
-      this.setState({
-        isLoading: false,
-        dataSource: list
-      });
-    });
-   this.initPushNotification();
-    this.loadData();
-  }
+ 
   _refresh() {
     console.log('i am called on bottom load more button ...');
     this.state.isLoading = false;

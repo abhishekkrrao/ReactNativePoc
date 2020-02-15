@@ -3,12 +3,17 @@ import { Text, TextInput, View, Button, TouchableHighlight ,Keyboard} from 'reac
 import styles from './style'
 import firebase from 'react-native-firebase'
 import Loading from '../../loader/Loading'
+// import auth from '../../Api/authentication'
 export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { email: '', password: '', errorMessage: null, isLoading: false }
   }
+
+  // saveData(key,obj){
+  //   auth.saveData(key,obj);
+  // }
 
   handleLogin = () => {
     // TODO: Firebase stuff...
@@ -30,6 +35,7 @@ export default class Login extends React.Component {
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           this.props.navigation.navigate('Home');
+         // this.saveData('userdata',email);
           this.setState({
             isLoading: false
           })
