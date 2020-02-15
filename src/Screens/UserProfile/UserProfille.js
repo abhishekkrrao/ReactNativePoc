@@ -207,8 +207,8 @@ export default class Modals extends Component {
   renderChildElement() {
     if (this.state.list.length > 0) {
       return (
-        <View style={{ flex: 1, width: '100%', paddingBottom: 10 , backgroundColor: "#fff"}}>
-          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5 }}>{'Yours'}</Text>
+        <View style={{ flex: 1, width: '100%', paddingBottom: 10, backgroundColor: "#fff" }}>
+          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5, textTransform: "none" }}>{'Likes'}</Text>
           <ScrollView
             style={{ flex: 1, width: '100%' }}
             horizontal={true}
@@ -229,7 +229,7 @@ export default class Modals extends Component {
     if (this.state.list.length > 0) {
       return (
         <View style={{ flex: 1, width: '100%', backgroundColor: "#fff", }}>
-          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5 }}>{'Your saved'}</Text>
+          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5, textTransform: "none" }}>{'Saved'}</Text>
           <ScrollView
             style={{ flex: 1, width: '100%' }}
             horizontal={true}
@@ -294,7 +294,7 @@ export default class Modals extends Component {
           </View>
           <View style={styles.item}>
             {this.showLoading()}
-          </View>        
+          </View>
           {this.renderChildElementAll()}
           {this.renderChildElement()}
         </ScrollView>
