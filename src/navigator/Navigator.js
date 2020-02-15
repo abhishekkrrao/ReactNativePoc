@@ -3,7 +3,7 @@ import Home from '../Screens/home/home'
 import Details from '../details/details'
 import addproduct from '../addproduct/addproduct'
 import Chats from '../chat/chat'
-import Modals from '../Screens/modal/modal'
+import UserProfille from '../Screens/UserProfile/UserProfille'
 import Loading from '../loader/Loading'
 import signUp from '../Screens/signup/SignUp'
 import profile from '../Screens/profile/profile'
@@ -58,8 +58,8 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         }
-    }, Modals: {
-        screen: Modals,
+    }, UserProfille: {
+        screen: UserProfille,
         navigationOptions: {
             title: "Profile",
             headerLeft: null,
@@ -85,7 +85,7 @@ const TabNavigator = createBottomTabNavigator({
                             source={require('../assets/home.png')}
                             style={{ width: 20, height: 20 }} />
                     );
-                case 'Modals':
+                case 'UserProfille':
                     return (
                         <Image
                             source={require('../assets/settings.png')}
@@ -123,7 +123,7 @@ const AppNavigator = createStackNavigator({
     addproduct: { screen: addproduct },
     Login: { screen: Login },
     Home: { screen: Home },
-    Modals: { screen: Modals },
+    UserProfille: { screen: UserProfille },
     Tabs: { screen: TabNavigator },
     Comment: { screen: Comment }
 }, {

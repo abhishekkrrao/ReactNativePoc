@@ -1,16 +1,19 @@
 import React from 'react'
-import { Text, TextInput, View, Button, TouchableHighlight ,Keyboard} from 'react-native'
+import { Text, TextInput, View, Button, TouchableHighlight, Keyboard } from 'react-native'
 import styles from './style'
 import firebase from 'react-native-firebase'
 import Loading from '../../loader/Loading'
 // import auth from '../../Api/authentication'
+
 export default class Login extends React.Component {
 
   constructor(props) {
     super(props)
     this.state = { email: '', password: '', errorMessage: null, isLoading: false }
   }
-
+  goSignUpPage() {
+    this.props.navigation.navigate('signUp');
+  }
   // saveData(key,obj){
   //   auth.saveData(key,obj);
   // }
@@ -25,7 +28,7 @@ export default class Login extends React.Component {
     const emailError = this.validateEmail(this.state.email)
     const passwordError = this.state.password
     if (!emailError && !passwordError) {
-      this.setState({ errorMessage: 'Details are not valid!' });
+      //this.setState({ errorMessage: 'Details are not valid!' });
       this.setState({
         isLoading: false
       })
@@ -35,7 +38,6 @@ export default class Login extends React.Component {
         .signInWithEmailAndPassword(email, password)
         .then(() => {
           this.props.navigation.navigate('Home');
-         // this.saveData('userdata',email);
           this.setState({
             isLoading: false
           })
@@ -46,7 +48,7 @@ export default class Login extends React.Component {
             isLoading: false
           })
         }
-      )
+        )
     }
   }
 
@@ -106,7 +108,7 @@ export default class Login extends React.Component {
         />
         {this.loader()}
 
-        <TouchableHighlight style={{ backgroundColor: '#000', width: 150, borderRadius: 15, padding: 5, alignSelf: 'center' }}>
+        <TouchableHighlight style={{ backgroundColor: '#000', width: 200, borderRadius: 0, padding: 5, alignSelf: 'center' }}>
           <Button style={{ fontFamily: "Montserrat-Medium", backgroundColor: '#000', alignSelf: 'flex-end' }} color='#000' title="Login" onPress={() => this.handleLogin()} />
         </TouchableHighlight>
 

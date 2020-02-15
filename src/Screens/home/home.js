@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, FlatList, Image, TouchableHighlight } from "react-native";
+import { View, Text, FlatList, Image, TouchableHighlight, Button } from "react-native";
 import firebase from 'react-native-firebase'
 import Loading from '../../loader/Loading'
 import Headers from '../../header/header'
@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import Share from 'react-native-share';
 import PushNotification from "react-native-push-notification";
 import styles from './style'
-// import auth from '../../Api/authentication'
 export default class Home extends Component {
   constructor(props) {
     super(props)
@@ -80,7 +79,7 @@ export default class Home extends Component {
     });
   }
 
- 
+
   _refresh() {
     console.log('i am called on bottom load more button ...');
     this.state.isLoading = false;
@@ -144,7 +143,7 @@ export default class Home extends Component {
 
   }
   render() {
-    const br = `\n`;
+
 
     if (this.state.isLoading == true) {
       return (
@@ -166,42 +165,57 @@ export default class Home extends Component {
             onEndReached={() => {
               this._refresh();
             }}
-            renderItem={({ item }) => {
-              return (
-                <View style={styles.custom_view}>
-                  <TouchableHighlight onPress={() => this.props.navigation.navigate('Details', { item: item })} style={styles.imageView} >
-                    <Image source={{ uri: item.productPic }} style={styles.imageViews} />
-                  </TouchableHighlight>
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Text style={styles.textView} > {item.productName} {br} {br} {item.productPrice} {'₹'} </Text>
-                  </View>
-                  <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <Text style={styles.textView} >{item.productDesc}</Text>
-                  </View>
-                  <View style={{ flex: 2, flexDirection: 'row' }}>
-                    <View style={{ padding: 10 }}>
-                      <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#D84315" />
-                    </View>
-                    <View style={{ padding: 10 }}>
-                      <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#D84315" />
-                    </View>
-                    <View style={{ padding: 10 }}>
-                      <Icon name="bookmark-o" size={24} color="#D84315" />
-                    </View>
-                    <View style={{ padding: 10 }}>
-                      {this.displayIcon(item)}
-                      {/* <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" /> */}
-                    </View>
-                  </View>
-                </View>
-              )
-            }}
+            renderItem={({ item }) => this.addIcons(item)}
             keyExtractor={(item, index) => index.toString() + '1456iug'}
           />
         </View>
       );
     }
   }
+
+  addIcons(item) {
+    const br = `\n`;
+    return (
+      <View style={styles.custom_view}>
+        <TouchableHighlight onPress={() => this.props.navigation.navigate('Details', { item: item })} style={styles.imageView} >
+          <Image source={{ uri: item.productPic }} style={styles.imageViews} />
+        </TouchableHighlight>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Text style={styles.textView} > {item.productName} {br} {br} {item.productPrice} {'₹'} </Text>
+        </View>
+        <View style={{ flex: 1, flexDirection: 'row' }}>
+          <Text style={styles.textView} >{item.productDesc}</Text>
+        </View>
+
+        <View style={{ flex: 2, flexDirection: 'row', width: "100%" }}>
+
+          <View style={{ flex: 1, flexDirection: 'row', width: "50%", alignSelf: "flex-start", alignContent: "flex-start", alignItems: "flex-start" }}>
+            <View style={{ padding: 10 }}>
+              <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#D84315" />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#D84315" />
+            </View>
+            <View style={{ padding: 10 }}>
+              <Icon name="bookmark-o" size={24} color="#D84315" />
+            </View>
+            <View style={{ padding: 10 }}>
+              {this.displayIcon(item)}
+            </View>
+          </View>
+
+          <View style={{ alignSelf: "flex-end", alignContent: "flex-end", alignItems: "flex-end" }}>
+            <TouchableHighlight style={ styles.cust_buy_b1 }>
+              <Button color='#000' title="BUY" onPress={() => console.log('')} />
+            </TouchableHighlight>
+          </View>
+
+        </View>
+
+      </View>
+    )
+  }
+
   displayIcon(item) {
     //console.log('item.isLike ', item.likes);
     let a = Object.values(item.likes);

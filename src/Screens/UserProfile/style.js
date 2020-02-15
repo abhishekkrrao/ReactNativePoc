@@ -1,10 +1,11 @@
 import {StyleSheet} from 'react-native';
 export default {
     container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: "#fff"
     },
     header: {
-      backgroundColor: "#DCDCDC",
+      backgroundColor: "#fff",
     },
     headerContent: {
       padding: 30,
@@ -40,7 +41,10 @@ export default {
       fontFamily: "Montserrat-Medium"
     },
     item: {
-      flexDirection: 'row',
+      flex: 1,
+      width:"100%",
+      height:1,
+      backgroundColor:"#ccc"
     },
     infoContent: {
       flex: 1,

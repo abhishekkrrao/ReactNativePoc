@@ -1,20 +1,34 @@
 import React, { Component } from 'react';
 import {
   TouchableHighlight,
-  StyleSheet,
   Text,
   View,
   Image,
   ScrollView
 } from 'react-native';
-import { Header } from 'react-native-elements';
-import LinearGradient from 'react-native-linear-gradient';
+import Headers from '../../header/header'
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Dialog from "react-native-dialog";
 import Loading from '../../loader/Loading'
 import styles from './style'
 export default class Modals extends Component {
+
+  _menu = null;
+
+  setMenuRef = ref => {
+    this._menu = ref;
+  };
+
+  hideMenu = () => {
+    this._menu.hide();
+  };
+
+  showMenu = () => {
+    this._menu.show();
+  };
+
+
   state = {
     email: '',
     uid: '',
@@ -193,8 +207,8 @@ export default class Modals extends Component {
   renderChildElement() {
     if (this.state.list.length > 0) {
       return (
-        <View style={{ flex: 1, width: '100%', paddingBottom: 10 }}>
-          <Text style={{ fontSize: 21, fontFamily: "Montserrat-Medium", padding: 5, fontWeight: "900" }}>{'All Product List'}</Text>
+        <View style={{ flex: 1, width: '100%', paddingBottom: 10 , backgroundColor: "#fff"}}>
+          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5 }}>{'Yours'}</Text>
           <ScrollView
             style={{ flex: 1, width: '100%' }}
             horizontal={true}
@@ -214,8 +228,8 @@ export default class Modals extends Component {
   renderChildElementAll() {
     if (this.state.list.length > 0) {
       return (
-        <View style={{ flex: 1, width: '100%' }}>
-          <Text style={{ fontSize: 21, fontFamily: "Montserrat-Medium", padding: 5, fontWeight: "900" }}>{'Your Product List'}</Text>
+        <View style={{ flex: 1, width: '100%', backgroundColor: "#fff", }}>
+          <Text style={{ fontSize: 21, fontFamily: "boldme", padding: 5 }}>{'Your saved'}</Text>
           <ScrollView
             style={{ flex: 1, width: '100%' }}
             horizontal={true}
@@ -259,17 +273,9 @@ export default class Modals extends Component {
     var name = data.substring(0, data.lastIndexOf("@"));
     return (
       <View style={styles.container}>
-        <Header
-          containerStyle={{ height: 55 }}
-          ViewComponent={LinearGradient} // Don't forget this!
-          centerComponent={{ text: 'Profile', style: { color: '#fff', fontFamily: "Montserrat-Medium", paddingBottom: 10 } }}
-          // leftComponent={{ icon: 'arrow-back', color: '#fff', onPress: () => this.closeApp() }}
-          linearGradientProps={{
-            colors: ['#ccc', '#ccc'],
-            start: { x: 0, y: 0.5 },
-            end: { x: 1, y: 0.5 },
-          }}
-        />
+
+        <Headers title="Profile" profile="isprofile"></Headers>
+
         <ScrollView
           style={{ flex: 1, width: '100%' }}
           horizontal={false}
@@ -286,21 +292,9 @@ export default class Modals extends Component {
               <Text style={styles.userInfo}>India </Text>
             </View>
           </View>
-          <View style={styles.body}>
-            <View style={styles.item}>
-              {this.showLoading()}
-            </View>
-            <View style={styles.item}>
-              <View style={{ padding: 5 }}>
-                <TouchableHighlight onPress={() => this.closeApp()}>
-                  <Image
-                    style={{ width: 25, height: 25 }}
-                    source={require('../.././assets/logout.png')}
-                  />
-                </TouchableHighlight>
-              </View>
-            </View>
-          </View>
+          <View style={styles.item}>
+            {this.showLoading()}
+          </View>        
           {this.renderChildElementAll()}
           {this.renderChildElement()}
         </ScrollView>

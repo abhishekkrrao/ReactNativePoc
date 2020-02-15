@@ -35,5 +35,6 @@ export default {
       fontFamily: "Montserrat-Medium",
       fontWeight: '500'
     },
-    custom_view: { flex: 1, backgroundColor: '#ffffff', margin: 5, padding: 0, borderRadius: 7, }
+    custom_view: { flex: 1, backgroundColor: '#ffffff', margin: 5, padding: 0, borderRadius: 7, },
+    cust_buy_b1:{ backgroundColor: '#000', marginEnd: 5, width: 125, borderRadius: 0, padding: 5, alignSelf: 'center' }
   };

@@ -2,9 +2,9 @@ import { StyleSheet } from 'react-native';
 export default {
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: "#fff"
+    backgroundColor: "#ccc",
+    justifyContent: 'center'
   },
   textInput: {
     height: 50,
