@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Image,
-  ScrollView
+  ScrollView,
+  Dimensions
 } from 'react-native';
 import Headers from '../../header/header'
 import firebase from 'react-native-firebase'
@@ -12,23 +13,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Dialog from "react-native-dialog";
 import Loading from '../../loader/Loading'
 import styles from './style'
+import { TabView, SceneMap } from 'react-native-tab-view';
+
 export default class Modals extends Component {
-
-  _menu = null;
-
-  setMenuRef = ref => {
-    this._menu = ref;
-  };
-
-  hideMenu = () => {
-    this._menu.hide();
-  };
-
-  showMenu = () => {
-    this._menu.show();
-  };
-
-
   state = {
     email: '',
     uid: '',
@@ -268,6 +255,40 @@ export default class Modals extends Component {
       </View>
     )
   }
+
+  profileTab() {
+
+    const FirstRoute = () => (
+      <View style={[styles.scene, { backgroundColor: '#ff4081' }]} />
+    );
+    
+    const SecondRoute = () => (
+      <View style={[styles.scene, { backgroundColor: '#673ab7' }]} />
+    );
+    const initialLayout = { width: Dimensions.get('window').width };
+
+    
+    const [index, setIndex] = React.useState(0);
+    const [routes] = React.useState([
+      { key: 'first', title: 'First' },
+      { key: 'second', title: 'Second' },
+    ]);
+
+    const renderScene = SceneMap({
+      first: FirstRoute,
+      second: SecondRoute,
+    });
+
+    return (
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        onIndexChange={setIndex}
+        initialLayout={initialLayout}
+      />
+    );
+  }
+
   render() {
     var data = this.state.email;
     var name = data.substring(0, data.lastIndexOf("@"));
@@ -295,8 +316,10 @@ export default class Modals extends Component {
           <View style={styles.item}>
             {this.showLoading()}
           </View>
-          {this.renderChildElementAll()}
-          {this.renderChildElement()}
+          {/* {this.renderChildElementAll()}
+          {this.renderChildElement()} */}
+
+          {/* {this.profileTab()} */}
         </ScrollView>
       </View>
     );

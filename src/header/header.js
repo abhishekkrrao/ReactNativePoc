@@ -66,7 +66,7 @@ export default class Headers extends Component {
                     }}
                 />
             );
-        } else if (this.props.title == 'Depop') {
+        } else if (this.props.title == 'A-shop') {
             return (
                 <Header
                     containerStyle={{ height: 55 }}

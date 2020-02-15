@@ -148,14 +148,14 @@ export default class Home extends Component {
     if (this.state.isLoading == true) {
       return (
         <View style={styles.MainContainer}>
-          <Headers title="Depop"></Headers>
+          <Headers title="A-shop"></Headers>
           <Loading></Loading>
         </View>
       )
     } else {
       return (
         <View style={styles.MainContainer}>
-          <Headers title="Depop"></Headers>
+          <Headers title="A-shop"></Headers>
           <FlatList
             data={this.state.dataSource}
             ItemSeparatorComponent={this.FlatListItemSeparator}
@@ -191,13 +191,13 @@ export default class Home extends Component {
 
           <View style={{ flex: 1, flexDirection: 'row', width: "50%", alignSelf: "flex-start", alignContent: "flex-start", alignItems: "flex-start" }}>
             <View style={{ padding: 10 }}>
-              <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#D84315" />
+              <Icon onPress={() => this.gotoCommentPage(item)} name="comment-o" size={24} color="#ccc" />
             </View>
             <View style={{ padding: 10 }}>
-              <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#D84315" />
+              <Icon onPress={() => this.shareApp(item.productPic)} name="mail-reply" size={24} color="#ccc" />
             </View>
             <View style={{ padding: 10 }}>
-              <Icon name="bookmark-o" size={24} color="#D84315" />
+              <Icon name="bookmark-o" size={24} color="#ccc" />
             </View>
             <View style={{ padding: 10 }}>
               {this.displayIcon(item)}
@@ -224,7 +224,7 @@ export default class Home extends Component {
     if (obj.isLike && item.uid == obj.uid) {
       return <Icon onPress={() => this.likeIt(item)} name="heart" size={24} color="#D84315" />
     } else {
-      return <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#D84315" />;
+      return <Icon onPress={() => this.likeIt(item)} name="heart-o" size={24} color="#ccc" />;
     }
   }
   gotoCommentPage(item) {
