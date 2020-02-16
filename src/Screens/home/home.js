@@ -143,8 +143,6 @@ export default class Home extends Component {
 
   }
   render() {
-
-
     if (this.state.isLoading == true) {
       return (
         <View style={styles.MainContainer}>
@@ -172,7 +170,6 @@ export default class Home extends Component {
       );
     }
   }
-
   addIcons(item) {
     const br = `\n`;
     return (
@@ -200,7 +197,8 @@ export default class Home extends Component {
               <Icon name="bookmark-o" size={24} color="#ccc" />
             </View>
             <View style={{ padding: 10 }}>
-              {this.displayIcon(item)}
+              {/* {this.displayIcon(item)} */}
+              <Icon onPress={() => console.log('')} name="heart" size={24} color="#D84315" />
             </View>
           </View>
 

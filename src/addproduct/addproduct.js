@@ -1,6 +1,6 @@
 import React from 'react'
 import { Text, TextInput, View, Button, TouchableHighlight, Image } from 'react-native'
-import styles from './addproductcss'
+import styles from './style'
 import firebase from 'react-native-firebase'
 import ImagePicker from 'react-native-image-crop-picker';
 import Headers from '../header/header'

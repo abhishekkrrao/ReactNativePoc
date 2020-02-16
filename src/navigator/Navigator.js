@@ -1,12 +1,12 @@
 import React, { Component } from "react";
 import Home from '../Screens/home/home'
-import Details from '../details/details'
+import Details from '../Screens/DetailPage/Details'
 import addproduct from '../addproduct/addproduct'
 import Chats from '../chat/chat'
 import UserProfille from '../Screens/UserProfile/UserProfille'
 import Loading from '../loader/Loading'
 import signUp from '../Screens/signup/SignUp'
-import profile from '../Screens/profile/profile'
+import chat from '../Screens/Chat/Chat'
 import Login from '../Screens/login/Login'
 import Comment from '../Screens/Comments/Comment'
 import { Image, Platform } from "react-native";
@@ -30,8 +30,8 @@ const TabNavigator = createBottomTabNavigator({
                 visible: false,
             }
         }
-    }, profile: {
-        screen: profile,
+    }, chat: {
+        screen: chat,
         navigationOptions: ({ navigation }) => ({
             title: "User List",
             headerLeft: null,
@@ -61,7 +61,7 @@ const TabNavigator = createBottomTabNavigator({
     }, UserProfille: {
         screen: UserProfille,
         navigationOptions: {
-            title: "Profile",
+            title: "chat",
             headerLeft: null,
             gesturesEnabled: false,
             header: {
@@ -97,7 +97,7 @@ const TabNavigator = createBottomTabNavigator({
                             source={require('../assets/contacts.png')}
                             style={{ width: 20, height: 20 }} />
                     );
-                case 'profile':
+                case 'chat':
                     return (
                         <Image
                             source={require('../assets/contacts.png')}
@@ -119,7 +119,7 @@ const AppNavigator = createStackNavigator({
     Details: { screen: Details },
     Chats: { screen: Chats },
     signUp: { screen: signUp },
-    profile: { screen: profile },
+    chat: { screen: chat },
     addproduct: { screen: addproduct },
     Login: { screen: Login },
     Home: { screen: Home },

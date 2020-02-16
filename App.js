@@ -125,10 +125,7 @@ export default class App extends Component {
     });
   }
   GetItem() {
-
-    // Alert.alert(flower_name);
     this.props.navigation.navigate('Home');
-
   }
   FlatListItemSeparator = () => {
     return (
@@ -145,7 +142,7 @@ export default class App extends Component {
     this.props.navigation.navigate('Home')
   }
   validateEmail = (email) => {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(email);
   }
   _storeData(email) {
