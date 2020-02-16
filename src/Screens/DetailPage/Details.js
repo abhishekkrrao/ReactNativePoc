@@ -3,7 +3,7 @@ import { View, Text, Image, TouchableOpacity } from "react-native";
 import styles from './style'
 import * as Animatable from 'react-native-animatable'
 import Icon from 'react-native-vector-icons/AntDesign'
-import Headers from '../../header/header'
+import Header from '../../Componets/HeaderView'
 export default class Details extends Component {
   constructor(props) {
     super(props)
@@ -65,7 +65,9 @@ export default class Details extends Component {
     }
     return (
       <View style={styles.containers}>
-        <Headers title="Detail"></Headers>
+        {/* <Headers title="Detail"></Headers> */}
+
+        <Header title="Detail" style={styles.headerContainer} />
 
         <TouchableOpacity
           activeOpacity={1}

@@ -4,6 +4,9 @@ export default {
     flex: 1,
     width:"100%"
   },
+  headerContainer: {
+    backgroundColor: "#ccc",
+},
   container: {
     flex: 1,
     justifyContent: 'center',
